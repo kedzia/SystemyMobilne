@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		19BC857E18F6B5CA00D9AA91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC857D18F6B5CA00D9AA91 /* Foundation.framework */; };
+		19BC858018F6B5CA00D9AA91 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC857F18F6B5CA00D9AA91 /* CoreGraphics.framework */; };
+		19BC858218F6B5CA00D9AA91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC858118F6B5CA00D9AA91 /* UIKit.framework */; };
+		19BC858418F6B5CA00D9AA91 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC858318F6B5CA00D9AA91 /* CoreData.framework */; };
+		19BC858A18F6B5CA00D9AA91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 19BC858818F6B5CA00D9AA91 /* InfoPlist.strings */; };
+		19BC858C18F6B5CA00D9AA91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC858B18F6B5CA00D9AA91 /* main.m */; };
+		19BC859018F6B5CA00D9AA91 /* SMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC858F18F6B5CA00D9AA91 /* SMAppDelegate.m */; };
+		19BC859318F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 19BC859118F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld */; };
+		19BC859518F6B5CB00D9AA91 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19BC859418F6B5CB00D9AA91 /* Images.xcassets */; };
+		19BC859C18F6B5CB00D9AA91 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC859B18F6B5CB00D9AA91 /* XCTest.framework */; };
+		19BC859D18F6B5CB00D9AA91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC857D18F6B5CA00D9AA91 /* Foundation.framework */; };
+		19BC859E18F6B5CB00D9AA91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC858118F6B5CA00D9AA91 /* UIKit.framework */; };
+		19BC859F18F6B5CB00D9AA91 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC858318F6B5CA00D9AA91 /* CoreData.framework */; };
+		19BC85A718F6B5CB00D9AA91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 19BC85A518F6B5CB00D9AA91 /* InfoPlist.strings */; };
+		19BC85A918F6B5CB00D9AA91 /* SystemyMobilneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		19BC85A018F6B5CB00D9AA91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 19BC857218F6B5CA00D9AA91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19BC857918F6B5CA00D9AA91;
+			remoteInfo = SystemyMobilne;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		19BC857A18F6B5CA00D9AA91 /* SystemyMobilne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SystemyMobilne.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		19BC857D18F6B5CA00D9AA91 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		19BC857F18F6B5CA00D9AA91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		19BC858118F6B5CA00D9AA91 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		19BC858318F6B5CA00D9AA91 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		19BC858718F6B5CA00D9AA91 /* SystemyMobilne-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SystemyMobilne-Info.plist"; sourceTree = "<group>"; };
+		19BC858918F6B5CA00D9AA91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		19BC858B18F6B5CA00D9AA91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		19BC858D18F6B5CA00D9AA91 /* SystemyMobilne-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SystemyMobilne-Prefix.pch"; sourceTree = "<group>"; };
+		19BC858E18F6B5CA00D9AA91 /* SMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMAppDelegate.h; sourceTree = "<group>"; };
+		19BC858F18F6B5CA00D9AA91 /* SMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMAppDelegate.m; sourceTree = "<group>"; };
+		19BC859218F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SystemyMobilne.xcdatamodel; sourceTree = "<group>"; };
+		19BC859418F6B5CB00D9AA91 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		19BC859A18F6B5CB00D9AA91 /* SystemyMobilneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemyMobilneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		19BC859B18F6B5CB00D9AA91 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		19BC85A418F6B5CB00D9AA91 /* SystemyMobilneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SystemyMobilneTests-Info.plist"; sourceTree = "<group>"; };
+		19BC85A618F6B5CB00D9AA91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemyMobilneTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		19BC857718F6B5CA00D9AA91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19BC858018F6B5CA00D9AA91 /* CoreGraphics.framework in Frameworks */,
+				19BC858418F6B5CA00D9AA91 /* CoreData.framework in Frameworks */,
+				19BC858218F6B5CA00D9AA91 /* UIKit.framework in Frameworks */,
+				19BC857E18F6B5CA00D9AA91 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19BC859718F6B5CB00D9AA91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19BC859C18F6B5CB00D9AA91 /* XCTest.framework in Frameworks */,
+				19BC859F18F6B5CB00D9AA91 /* CoreData.framework in Frameworks */,
+				19BC859E18F6B5CB00D9AA91 /* UIKit.framework in Frameworks */,
+				19BC859D18F6B5CB00D9AA91 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19BC857118F6B5CA00D9AA91 = {
+			isa = PBXGroup;
+			children = (
+				19BC858518F6B5CA00D9AA91 /* SystemyMobilne */,
+				19BC85A218F6B5CB00D9AA91 /* SystemyMobilneTests */,
+				19BC857C18F6B5CA00D9AA91 /* Frameworks */,
+				19BC857B18F6B5CA00D9AA91 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		19BC857B18F6B5CA00D9AA91 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				19BC857A18F6B5CA00D9AA91 /* SystemyMobilne.app */,
+				19BC859A18F6B5CB00D9AA91 /* SystemyMobilneTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		19BC857C18F6B5CA00D9AA91 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				19BC857D18F6B5CA00D9AA91 /* Foundation.framework */,
+				19BC857F18F6B5CA00D9AA91 /* CoreGraphics.framework */,
+				19BC858118F6B5CA00D9AA91 /* UIKit.framework */,
+				19BC858318F6B5CA00D9AA91 /* CoreData.framework */,
+				19BC859B18F6B5CB00D9AA91 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		19BC858518F6B5CA00D9AA91 /* SystemyMobilne */ = {
+			isa = PBXGroup;
+			children = (
+				19BC858E18F6B5CA00D9AA91 /* SMAppDelegate.h */,
+				19BC858F18F6B5CA00D9AA91 /* SMAppDelegate.m */,
+				19BC859418F6B5CB00D9AA91 /* Images.xcassets */,
+				19BC859118F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld */,
+				19BC858618F6B5CA00D9AA91 /* Supporting Files */,
+			);
+			path = SystemyMobilne;
+			sourceTree = "<group>";
+		};
+		19BC858618F6B5CA00D9AA91 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				19BC858718F6B5CA00D9AA91 /* SystemyMobilne-Info.plist */,
+				19BC858818F6B5CA00D9AA91 /* InfoPlist.strings */,
+				19BC858B18F6B5CA00D9AA91 /* main.m */,
+				19BC858D18F6B5CA00D9AA91 /* SystemyMobilne-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		19BC85A218F6B5CB00D9AA91 /* SystemyMobilneTests */ = {
+			isa = PBXGroup;
+			children = (
+				19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */,
+				19BC85A318F6B5CB00D9AA91 /* Supporting Files */,
+			);
+			path = SystemyMobilneTests;
+			sourceTree = "<group>";
+		};
+		19BC85A318F6B5CB00D9AA91 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				19BC85A418F6B5CB00D9AA91 /* SystemyMobilneTests-Info.plist */,
+				19BC85A518F6B5CB00D9AA91 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		19BC857918F6B5CA00D9AA91 /* SystemyMobilne */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19BC85AC18F6B5CB00D9AA91 /* Build configuration list for PBXNativeTarget "SystemyMobilne" */;
+			buildPhases = (
+				19BC857618F6B5CA00D9AA91 /* Sources */,
+				19BC857718F6B5CA00D9AA91 /* Frameworks */,
+				19BC857818F6B5CA00D9AA91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SystemyMobilne;
+			productName = SystemyMobilne;
+			productReference = 19BC857A18F6B5CA00D9AA91 /* SystemyMobilne.app */;
+			productType = "com.apple.product-type.application";
+		};
+		19BC859918F6B5CB00D9AA91 /* SystemyMobilneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19BC85AF18F6B5CB00D9AA91 /* Build configuration list for PBXNativeTarget "SystemyMobilneTests" */;
+			buildPhases = (
+				19BC859618F6B5CB00D9AA91 /* Sources */,
+				19BC859718F6B5CB00D9AA91 /* Frameworks */,
+				19BC859818F6B5CB00D9AA91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				19BC85A118F6B5CB00D9AA91 /* PBXTargetDependency */,
+			);
+			name = SystemyMobilneTests;
+			productName = SystemyMobilneTests;
+			productReference = 19BC859A18F6B5CB00D9AA91 /* SystemyMobilneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		19BC857218F6B5CA00D9AA91 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SM;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Adam;
+				TargetAttributes = {
+					19BC859918F6B5CB00D9AA91 = {
+						TestTargetID = 19BC857918F6B5CA00D9AA91;
+					};
+				};
+			};
+			buildConfigurationList = 19BC857518F6B5CA00D9AA91 /* Build configuration list for PBXProject "SystemyMobilne" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 19BC857118F6B5CA00D9AA91;
+			productRefGroup = 19BC857B18F6B5CA00D9AA91 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				19BC857918F6B5CA00D9AA91 /* SystemyMobilne */,
+				19BC859918F6B5CB00D9AA91 /* SystemyMobilneTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		19BC857818F6B5CA00D9AA91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19BC858A18F6B5CA00D9AA91 /* InfoPlist.strings in Resources */,
+				19BC859518F6B5CB00D9AA91 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19BC859818F6B5CB00D9AA91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19BC85A718F6B5CB00D9AA91 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		19BC857618F6B5CA00D9AA91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19BC859318F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld in Sources */,
+				19BC859018F6B5CA00D9AA91 /* SMAppDelegate.m in Sources */,
+				19BC858C18F6B5CA00D9AA91 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19BC859618F6B5CB00D9AA91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19BC85A918F6B5CB00D9AA91 /* SystemyMobilneTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		19BC85A118F6B5CB00D9AA91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 19BC857918F6B5CA00D9AA91 /* SystemyMobilne */;
+			targetProxy = 19BC85A018F6B5CB00D9AA91 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		19BC858818F6B5CA00D9AA91 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				19BC858918F6B5CA00D9AA91 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		19BC85A518F6B5CB00D9AA91 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				19BC85A618F6B5CB00D9AA91 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		19BC85AA18F6B5CB00D9AA91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		19BC85AB18F6B5CB00D9AA91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		19BC85AD18F6B5CB00D9AA91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SystemyMobilne/SystemyMobilne-Prefix.pch";
+				INFOPLIST_FILE = "SystemyMobilne/SystemyMobilne-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		19BC85AE18F6B5CB00D9AA91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SystemyMobilne/SystemyMobilne-Prefix.pch";
+				INFOPLIST_FILE = "SystemyMobilne/SystemyMobilne-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		19BC85B018F6B5CB00D9AA91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SystemyMobilne.app/SystemyMobilne";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SystemyMobilne/SystemyMobilne-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "SystemyMobilneTests/SystemyMobilneTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		19BC85B118F6B5CB00D9AA91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SystemyMobilne.app/SystemyMobilne";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SystemyMobilne/SystemyMobilne-Prefix.pch";
+				INFOPLIST_FILE = "SystemyMobilneTests/SystemyMobilneTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		19BC857518F6B5CA00D9AA91 /* Build configuration list for PBXProject "SystemyMobilne" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19BC85AA18F6B5CB00D9AA91 /* Debug */,
+				19BC85AB18F6B5CB00D9AA91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		19BC85AC18F6B5CB00D9AA91 /* Build configuration list for PBXNativeTarget "SystemyMobilne" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19BC85AD18F6B5CB00D9AA91 /* Debug */,
+				19BC85AE18F6B5CB00D9AA91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		19BC85AF18F6B5CB00D9AA91 /* Build configuration list for PBXNativeTarget "SystemyMobilneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19BC85B018F6B5CB00D9AA91 /* Debug */,
+				19BC85B118F6B5CB00D9AA91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		19BC859118F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				19BC859218F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodel */,
+			);
+			currentVersion = 19BC859218F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodel */;
+			path = SystemyMobilne.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 19BC857218F6B5CA00D9AA91 /* Project object */;
+}
