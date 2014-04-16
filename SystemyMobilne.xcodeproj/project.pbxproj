@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19A0672318FECC8400781DEA /* SMPhotoAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A0672218FECC8400781DEA /* SMPhotoAdder.m */; };
+		19A0672618FED08100781DEA /* SMURLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A0672518FED08100781DEA /* SMURLTransformer.m */; };
+		19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B23F18F6E71E00C9D11A /* SMPlacemarkTransformer.m */; };
+		19A6B24218F6E72D00C9D11A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A6B24118F6E72D00C9D11A /* MapKit.framework */; };
+		19A6B24918F6EB9B00C9D11A /* SMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B24718F6EB9B00C9D11A /* SMViewController.m */; };
+		19A6B24A18F6EB9B00C9D11A /* SMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 19A6B24818F6EB9B00C9D11A /* SMViewController.xib */; };
+		19A6B25118F821A200C9D11A /* SMLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B25018F821A200C9D11A /* SMLocation.m */; };
+		19A6B25418F821DE00C9D11A /* SMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B25318F821DE00C9D11A /* SMPhoto.m */; };
+		19A6B25718F8241C00C9D11A /* SMPhoto+methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B25618F8241C00C9D11A /* SMPhoto+methods.m */; };
+		19A6B25A18F8279E00C9D11A /* SMLocation+methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B25918F8279E00C9D11A /* SMLocation+methods.m */; };
+		19A6B25C18F86CA000C9D11A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A6B25B18F86C9F00C9D11A /* MobileCoreServices.framework */; };
 		19BC857E18F6B5CA00D9AA91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC857D18F6B5CA00D9AA91 /* Foundation.framework */; };
 		19BC858018F6B5CA00D9AA91 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC857F18F6B5CA00D9AA91 /* CoreGraphics.framework */; };
 		19BC858218F6B5CA00D9AA91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC858118F6B5CA00D9AA91 /* UIKit.framework */; };
@@ -22,6 +33,7 @@
 		19BC859F18F6B5CB00D9AA91 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BC858318F6B5CA00D9AA91 /* CoreData.framework */; };
 		19BC85A718F6B5CB00D9AA91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 19BC85A518F6B5CB00D9AA91 /* InfoPlist.strings */; };
 		19BC85A918F6B5CB00D9AA91 /* SystemyMobilneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */; };
+		19BC85B418F6C96D00D9AA91 /* SMPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC85B318F6C96D00D9AA91 /* SMPersistentStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +47,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19A0672118FECC8400781DEA /* SMPhotoAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoAdder.h; sourceTree = "<group>"; };
+		19A0672218FECC8400781DEA /* SMPhotoAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoAdder.m; sourceTree = "<group>"; };
+		19A0672418FED08100781DEA /* SMURLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMURLTransformer.h; sourceTree = "<group>"; };
+		19A0672518FED08100781DEA /* SMURLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMURLTransformer.m; sourceTree = "<group>"; };
+		19A6B23E18F6E71E00C9D11A /* SMPlacemarkTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPlacemarkTransformer.h; sourceTree = "<group>"; };
+		19A6B23F18F6E71E00C9D11A /* SMPlacemarkTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPlacemarkTransformer.m; sourceTree = "<group>"; };
+		19A6B24118F6E72D00C9D11A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		19A6B24618F6EB9B00C9D11A /* SMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMViewController.h; sourceTree = "<group>"; };
+		19A6B24718F6EB9B00C9D11A /* SMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMViewController.m; sourceTree = "<group>"; };
+		19A6B24818F6EB9B00C9D11A /* SMViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMViewController.xib; sourceTree = "<group>"; };
+		19A6B24F18F821A200C9D11A /* SMLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLocation.h; sourceTree = "<group>"; };
+		19A6B25018F821A200C9D11A /* SMLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLocation.m; sourceTree = "<group>"; };
+		19A6B25218F821DE00C9D11A /* SMPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhoto.h; sourceTree = "<group>"; };
+		19A6B25318F821DE00C9D11A /* SMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhoto.m; sourceTree = "<group>"; };
+		19A6B25518F8241C00C9D11A /* SMPhoto+methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMPhoto+methods.h"; sourceTree = "<group>"; };
+		19A6B25618F8241C00C9D11A /* SMPhoto+methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMPhoto+methods.m"; sourceTree = "<group>"; };
+		19A6B25818F8279E00C9D11A /* SMLocation+methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMLocation+methods.h"; sourceTree = "<group>"; };
+		19A6B25918F8279E00C9D11A /* SMLocation+methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMLocation+methods.m"; sourceTree = "<group>"; };
+		19A6B25B18F86C9F00C9D11A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		19BC857A18F6B5CA00D9AA91 /* SystemyMobilne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SystemyMobilne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19BC857D18F6B5CA00D9AA91 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		19BC857F18F6B5CA00D9AA91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +84,8 @@
 		19BC85A418F6B5CB00D9AA91 /* SystemyMobilneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SystemyMobilneTests-Info.plist"; sourceTree = "<group>"; };
 		19BC85A618F6B5CB00D9AA91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemyMobilneTests.m; sourceTree = "<group>"; };
+		19BC85B218F6C96D00D9AA91 /* SMPersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPersistentStore.h; sourceTree = "<group>"; };
+		19BC85B318F6C96D00D9AA91 /* SMPersistentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPersistentStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +93,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19A6B25C18F86CA000C9D11A /* MobileCoreServices.framework in Frameworks */,
+				19A6B24218F6E72D00C9D11A /* MapKit.framework in Frameworks */,
 				19BC858018F6B5CA00D9AA91 /* CoreGraphics.framework in Frameworks */,
 				19BC858418F6B5CA00D9AA91 /* CoreData.framework in Frameworks */,
 				19BC858218F6B5CA00D9AA91 /* UIKit.framework in Frameworks */,
@@ -81,6 +116,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19A6B24B18F8216A00C9D11A /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				19A0672418FED08100781DEA /* SMURLTransformer.h */,
+				19A0672518FED08100781DEA /* SMURLTransformer.m */,
+				19A6B23F18F6E71E00C9D11A /* SMPlacemarkTransformer.m */,
+				19A6B23E18F6E71E00C9D11A /* SMPlacemarkTransformer.h */,
+				19BC85B218F6C96D00D9AA91 /* SMPersistentStore.h */,
+				19BC85B318F6C96D00D9AA91 /* SMPersistentStore.m */,
+				19BC859118F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld */,
+				19A6B24F18F821A200C9D11A /* SMLocation.h */,
+				19A6B25018F821A200C9D11A /* SMLocation.m */,
+				19A6B25218F821DE00C9D11A /* SMPhoto.h */,
+				19A6B25318F821DE00C9D11A /* SMPhoto.m */,
+				19A6B25518F8241C00C9D11A /* SMPhoto+methods.h */,
+				19A6B25618F8241C00C9D11A /* SMPhoto+methods.m */,
+				19A6B25818F8279E00C9D11A /* SMLocation+methods.h */,
+				19A6B25918F8279E00C9D11A /* SMLocation+methods.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		19BC857118F6B5CA00D9AA91 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +160,8 @@
 		19BC857C18F6B5CA00D9AA91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19A6B25B18F86C9F00C9D11A /* MobileCoreServices.framework */,
+				19A6B24118F6E72D00C9D11A /* MapKit.framework */,
 				19BC857D18F6B5CA00D9AA91 /* Foundation.framework */,
 				19BC857F18F6B5CA00D9AA91 /* CoreGraphics.framework */,
 				19BC858118F6B5CA00D9AA91 /* UIKit.framework */,
@@ -115,10 +174,15 @@
 		19BC858518F6B5CA00D9AA91 /* SystemyMobilne */ = {
 			isa = PBXGroup;
 			children = (
-				19BC858E18F6B5CA00D9AA91 /* SMAppDelegate.h */,
 				19BC858F18F6B5CA00D9AA91 /* SMAppDelegate.m */,
+				19BC858E18F6B5CA00D9AA91 /* SMAppDelegate.h */,
+				19A0672118FECC8400781DEA /* SMPhotoAdder.h */,
+				19A0672218FECC8400781DEA /* SMPhotoAdder.m */,
+				19A6B24618F6EB9B00C9D11A /* SMViewController.h */,
+				19A6B24718F6EB9B00C9D11A /* SMViewController.m */,
+				19A6B24818F6EB9B00C9D11A /* SMViewController.xib */,
 				19BC859418F6B5CB00D9AA91 /* Images.xcassets */,
-				19BC859118F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld */,
+				19A6B24B18F8216A00C9D11A /* CoreData */,
 				19BC858618F6B5CA00D9AA91 /* Supporting Files */,
 			);
 			path = SystemyMobilne;
@@ -229,6 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19A6B24A18F6EB9B00C9D11A /* SMViewController.xib in Resources */,
 				19BC858A18F6B5CA00D9AA91 /* InfoPlist.strings in Resources */,
 				19BC859518F6B5CB00D9AA91 /* Images.xcassets in Resources */,
 			);
@@ -249,8 +314,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19A0672318FECC8400781DEA /* SMPhotoAdder.m in Sources */,
+				19A6B25718F8241C00C9D11A /* SMPhoto+methods.m in Sources */,
+				19A6B24918F6EB9B00C9D11A /* SMViewController.m in Sources */,
+				19A6B25118F821A200C9D11A /* SMLocation.m in Sources */,
+				19BC85B418F6C96D00D9AA91 /* SMPersistentStore.m in Sources */,
 				19BC859318F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld in Sources */,
 				19BC859018F6B5CA00D9AA91 /* SMAppDelegate.m in Sources */,
+				19A0672618FED08100781DEA /* SMURLTransformer.m in Sources */,
+				19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */,
+				19A6B25A18F8279E00C9D11A /* SMLocation+methods.m in Sources */,
+				19A6B25418F821DE00C9D11A /* SMPhoto.m in Sources */,
 				19BC858C18F6B5CA00D9AA91 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,6 +522,7 @@
 				19BC85AE18F6B5CB00D9AA91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		19BC85AF18F6B5CB00D9AA91 /* Build configuration list for PBXNativeTarget "SystemyMobilneTests" */ = {
 			isa = XCConfigurationList;
@@ -456,6 +531,7 @@
 				19BC85B118F6B5CB00D9AA91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

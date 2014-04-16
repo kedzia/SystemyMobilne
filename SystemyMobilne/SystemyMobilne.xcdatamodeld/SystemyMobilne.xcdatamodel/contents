@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="SMLocation" representedClassName="SMLocation" syncable="YES">
+        <attribute name="placemark" optional="YES" attributeType="Transformable" valueTransformerName="SMPlacemarkTransformer" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SMPhoto" inverseName="location" inverseEntity="SMPhoto" syncable="YES"/>
+    </entity>
+    <entity name="SMPhoto" representedClassName="SMPhoto" syncable="YES">
+        <attribute name="descritptionText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoURL" optional="YES" attributeType="Transformable" valueTransformerName="SMURLTransformer" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SMLocation" inverseName="photos" inverseEntity="SMLocation" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SMLocation" positionX="180" positionY="-73" width="128" height="73"/>
+        <element name="SMPhoto" positionX="-27" positionY="-10" width="128" height="88"/>
+    </elements>
 </model>
