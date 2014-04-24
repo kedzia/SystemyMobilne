@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
+@protocol SMPhotoAdderProtocol
+-(void)finishedAddingPhotos;
+@end
 @interface SMPhotoAdder : NSObject
-@property (weak, nonatomic) UIViewController *delegate;
+@property (weak, nonatomic) UIViewController<SMPhotoAdderProtocol> *delegate;
 -(void)addPhotoToLocation:(CLLocation *)location andSaveInContext:(NSManagedObjectContext*)context;
 
 @end

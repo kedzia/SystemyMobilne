@@ -14,5 +14,7 @@
 
 @dynamic placemark;
 @dynamic photos;
+@dynamic name;
+@dynamic location;
 
 @end

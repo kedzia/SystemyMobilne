@@ -15,6 +15,8 @@
 @interface SMLocation : NSManagedObject
 
 @property (nonatomic, retain) CLPlacemark *placemark;
+@property (nonatomic, retain) CLLocation *location;
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSSet *photos;
 @end
 

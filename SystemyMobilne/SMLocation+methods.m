@@ -9,12 +9,18 @@
 #import "SMLocation+methods.h"
 
 @implementation SMLocation (methods)
-+(instancetype)initLocationWithPlacemark:(CLPlacemark *)placemark andContext:(NSManagedObjectContext *)context
++(instancetype)initLocationWithPlacemark:(CLPlacemark *)placemark
+                                Location:(CLLocation *)location
+                                    Name:(NSString *)name
+                              andContext:(NSManagedObjectContext *)context
+
 {
     SMLocation *locationEntity = [NSEntityDescription insertNewObjectForEntityForName:@"SMLocation" inManagedObjectContext:context];
     if(locationEntity != nil)
     {
         locationEntity.placemark = placemark;
+        locationEntity.location = location;
+        locationEntity.name = name;
     }
     else
     {
@@ -22,5 +28,15 @@
     }
     
     return locationEntity;
+}
+
++(instancetype)initLocationWithPlacemark:(CLPlacemark *)placemark Location:(CLLocation *)location andContext:(NSManagedObjectContext *)context
+{
+    NSString *parsedName = [NSString stringWithFormat:@"%@ ,%@ ,%@",placemark.country,placemark.subAdministrativeArea, placemark.locality ];
+    
+    return [SMLocation initLocationWithPlacemark:placemark
+                                        Location:location
+                                            Name:parsedName
+                                      andContext:context];
 }
 @end

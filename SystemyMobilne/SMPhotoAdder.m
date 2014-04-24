@@ -44,19 +44,23 @@
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder reverseGeocodeLocation:location
                    completionHandler:^(NSArray *placemarks, NSError *error){
+
         if(placemarks != nil)
         {
             [context performBlock:^{
                 for(CLPlacemark *placemark in placemarks)
                 {
-                    SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark
-                                                                            andContext:context];
+                    NSLog(@"Location: %f, %f", location.coordinate.longitude, location.coordinate.latitude);
+                    NSLog(@"Placemark: %f, %f", placemark.location.coordinate.longitude, placemark.location.coordinate.latitude);
+                    
+                    SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark Location:location andContext:context];
                     [SMPhoto initPhotoWith:url
                                       Text:@" " andLocation:locationEntity
                                  inContext:context];
                 }
+                [self.delegate finishedAddingPhotos];
             }];
-            
+           
         }
         else
         {
@@ -64,6 +68,9 @@
         }
         
     }];
+    
+    
+    
     
 }
 

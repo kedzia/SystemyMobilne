@@ -10,5 +10,8 @@
 
 @interface SMLocation (methods)
 
-+(instancetype)initLocationWithPlacemark:(CLPlacemark*)placemark andContext:(NSManagedObjectContext*)context;
++(instancetype)initLocationWithPlacemark:(CLPlacemark*)placemark Location:(CLLocation*)location Name:(NSString*) name andContext:(NSManagedObjectContext*)context;
+
+
++(instancetype)initLocationWithPlacemark:(CLPlacemark*)placemark Location:(CLLocation*)location andContext:(NSManagedObjectContext*)context;
 @end

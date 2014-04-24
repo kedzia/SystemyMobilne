@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19265D4919093D540006F5D2 /* SMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D4819093D540006F5D2 /* SMAnnotation.m */; };
 		19A0672318FECC8400781DEA /* SMPhotoAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A0672218FECC8400781DEA /* SMPhotoAdder.m */; };
 		19A0672618FED08100781DEA /* SMURLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A0672518FED08100781DEA /* SMURLTransformer.m */; };
 		19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B23F18F6E71E00C9D11A /* SMPlacemarkTransformer.m */; };
@@ -34,6 +35,7 @@
 		19BC85A718F6B5CB00D9AA91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 19BC85A518F6B5CB00D9AA91 /* InfoPlist.strings */; };
 		19BC85A918F6B5CB00D9AA91 /* SystemyMobilneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */; };
 		19BC85B418F6C96D00D9AA91 /* SMPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC85B318F6C96D00D9AA91 /* SMPersistentStore.m */; };
+		19CD551618FF01C3002BD846 /* SMLocationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CD551518FF01C3002BD846 /* SMLocationTransformer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19265D4719093D540006F5D2 /* SMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMAnnotation.h; sourceTree = "<group>"; };
+		19265D4819093D540006F5D2 /* SMAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMAnnotation.m; sourceTree = "<group>"; };
 		19A0672118FECC8400781DEA /* SMPhotoAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoAdder.h; sourceTree = "<group>"; };
 		19A0672218FECC8400781DEA /* SMPhotoAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoAdder.m; sourceTree = "<group>"; };
 		19A0672418FED08100781DEA /* SMURLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMURLTransformer.h; sourceTree = "<group>"; };
@@ -86,6 +90,9 @@
 		19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemyMobilneTests.m; sourceTree = "<group>"; };
 		19BC85B218F6C96D00D9AA91 /* SMPersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPersistentStore.h; sourceTree = "<group>"; };
 		19BC85B318F6C96D00D9AA91 /* SMPersistentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPersistentStore.m; sourceTree = "<group>"; };
+		19CD551318FF0029002BD846 /* SystemyMobilne 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SystemyMobilne 2.xcdatamodel"; sourceTree = "<group>"; };
+		19CD551418FF01C3002BD846 /* SMLocationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLocationTransformer.h; sourceTree = "<group>"; };
+		19CD551518FF01C3002BD846 /* SMLocationTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLocationTransformer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +126,8 @@
 		19A6B24B18F8216A00C9D11A /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				19CD551418FF01C3002BD846 /* SMLocationTransformer.h */,
+				19CD551518FF01C3002BD846 /* SMLocationTransformer.m */,
 				19A0672418FED08100781DEA /* SMURLTransformer.h */,
 				19A0672518FED08100781DEA /* SMURLTransformer.m */,
 				19A6B23F18F6E71E00C9D11A /* SMPlacemarkTransformer.m */,
@@ -174,6 +183,8 @@
 		19BC858518F6B5CA00D9AA91 /* SystemyMobilne */ = {
 			isa = PBXGroup;
 			children = (
+				19265D4719093D540006F5D2 /* SMAnnotation.h */,
+				19265D4819093D540006F5D2 /* SMAnnotation.m */,
 				19BC858F18F6B5CA00D9AA91 /* SMAppDelegate.m */,
 				19BC858E18F6B5CA00D9AA91 /* SMAppDelegate.h */,
 				19A0672118FECC8400781DEA /* SMPhotoAdder.h */,
@@ -320,9 +331,11 @@
 				19A6B25118F821A200C9D11A /* SMLocation.m in Sources */,
 				19BC85B418F6C96D00D9AA91 /* SMPersistentStore.m in Sources */,
 				19BC859318F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld in Sources */,
+				19265D4919093D540006F5D2 /* SMAnnotation.m in Sources */,
 				19BC859018F6B5CA00D9AA91 /* SMAppDelegate.m in Sources */,
 				19A0672618FED08100781DEA /* SMURLTransformer.m in Sources */,
 				19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */,
+				19CD551618FF01C3002BD846 /* SMLocationTransformer.m in Sources */,
 				19A6B25A18F8279E00C9D11A /* SMLocation+methods.m in Sources */,
 				19A6B25418F821DE00C9D11A /* SMPhoto.m in Sources */,
 				19BC858C18F6B5CA00D9AA91 /* main.m in Sources */,
@@ -539,9 +552,10 @@
 		19BC859118F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				19CD551318FF0029002BD846 /* SystemyMobilne 2.xcdatamodel */,
 				19BC859218F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodel */,
 			);
-			currentVersion = 19BC859218F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodel */;
+			currentVersion = 19CD551318FF0029002BD846 /* SystemyMobilne 2.xcdatamodel */;
 			path = SystemyMobilne.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SMViewController : UIViewController
+@interface SMViewController : UIViewController 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @end
