@@ -45,7 +45,12 @@
     {
         for(SMLocation *location in locationArray)
         {
-            SMAnnotation *annotation = [[SMAnnotation alloc] initWithCoordinates:location.location.coordinate title:location.name subTitle:nil URL:[[location.photos anyObject] photoURL]];
+            SMAnnotation *annotation = [[SMAnnotation alloc]
+                                        initWithCoordinates:location.location.coordinate
+                                        title:location.name
+                                        subTitle:nil
+                                        URL:[[location.photos anyObject] photoURL]
+                                        location:location];
             
             [self.mapView addAnnotation:annotation];
         }
@@ -96,7 +101,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)retrieveImageFromAssestsWithURL:(NSURL*)paramURL forView:(MKPinAnnotationView*) paramView;
+-(void)retrieveImageFromAssestsWithURL:(NSURL*)paramURL forView:(UIView*) paramView;
 {
     ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *myAsset)
     {
@@ -109,7 +114,8 @@
             UIImageView *imv = [[UIImageView alloc] initWithImage:largeImage];
             imv.autoresizingMask = UIViewContentModeScaleToFill;
             imv.frame = CGRectMake(0, 0, 35, 35);
-            [paramView setLeftCalloutAccessoryView:imv];
+            paramView.frame = imv.frame;
+            [paramView addSubview:imv];
         }
     };
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
@@ -142,7 +148,7 @@
         
         annotationView.rightCalloutAccessoryView = accesorButton;
         
-        [self retrieveImageFromAssestsWithURL:smAnnotation.photoURL forView:annotationView];
+        [self retrieveImageFromAssestsWithURL:smAnnotation.photoURL forView:annotationView.leftCalloutAccessoryView];
 
         
     }
@@ -159,7 +165,7 @@
     if(![view.annotation isKindOfClass:[SMAnnotation class]])
     {
         SMAnnotation *anno = (SMAnnotation*)view.annotation;
-        
+        //inicjalizacja UICcolectionView
     }
     else
     {
