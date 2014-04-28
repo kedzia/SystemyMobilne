@@ -10,6 +10,9 @@
 		19265D4919093D540006F5D2 /* SMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D4819093D540006F5D2 /* SMAnnotation.m */; };
 		19265D4F190988430006F5D2 /* SMPhotosCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D4E190988430006F5D2 /* SMPhotosCVC.m */; };
 		19265D52190AA95E0006F5D2 /* SMPhotosCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D51190AA95E0006F5D2 /* SMPhotosCVCell.m */; };
+		199F794C190E438600DF1F6C /* SMPageVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 199F794B190E438600DF1F6C /* SMPageVCDataSource.m */; };
+		199F7950190E499500DF1F6C /* SMPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 199F794E190E499500DF1F6C /* SMPhotoViewController.m */; };
+		199F7954190E4B3F00DF1F6C /* SMPhotoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 199F7953190E4B3F00DF1F6C /* SMPhotoScrollView.m */; };
 		19A0672318FECC8400781DEA /* SMPhotoAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A0672218FECC8400781DEA /* SMPhotoAdder.m */; };
 		19A0672618FED08100781DEA /* SMURLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A0672518FED08100781DEA /* SMURLTransformer.m */; };
 		19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A6B23F18F6E71E00C9D11A /* SMPlacemarkTransformer.m */; };
@@ -57,6 +60,12 @@
 		19265D4E190988430006F5D2 /* SMPhotosCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotosCVC.m; sourceTree = "<group>"; };
 		19265D50190AA95E0006F5D2 /* SMPhotosCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotosCVCell.h; sourceTree = "<group>"; };
 		19265D51190AA95E0006F5D2 /* SMPhotosCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotosCVCell.m; sourceTree = "<group>"; };
+		199F794A190E438600DF1F6C /* SMPageVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageVCDataSource.h; sourceTree = "<group>"; };
+		199F794B190E438600DF1F6C /* SMPageVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageVCDataSource.m; sourceTree = "<group>"; };
+		199F794D190E499500DF1F6C /* SMPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoViewController.h; sourceTree = "<group>"; };
+		199F794E190E499500DF1F6C /* SMPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoViewController.m; sourceTree = "<group>"; };
+		199F7952190E4B3F00DF1F6C /* SMPhotoScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoScrollView.h; sourceTree = "<group>"; };
+		199F7953190E4B3F00DF1F6C /* SMPhotoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoScrollView.m; sourceTree = "<group>"; };
 		19A0672118FECC8400781DEA /* SMPhotoAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoAdder.h; sourceTree = "<group>"; };
 		19A0672218FECC8400781DEA /* SMPhotoAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoAdder.m; sourceTree = "<group>"; };
 		19A0672418FED08100781DEA /* SMURLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMURLTransformer.h; sourceTree = "<group>"; };
@@ -189,6 +198,12 @@
 		19BC858518F6B5CA00D9AA91 /* SystemyMobilne */ = {
 			isa = PBXGroup;
 			children = (
+				199F7952190E4B3F00DF1F6C /* SMPhotoScrollView.h */,
+				199F7953190E4B3F00DF1F6C /* SMPhotoScrollView.m */,
+				199F794D190E499500DF1F6C /* SMPhotoViewController.h */,
+				199F794E190E499500DF1F6C /* SMPhotoViewController.m */,
+				199F794A190E438600DF1F6C /* SMPageVCDataSource.h */,
+				199F794B190E438600DF1F6C /* SMPageVCDataSource.m */,
 				19265D50190AA95E0006F5D2 /* SMPhotosCVCell.h */,
 				19265D51190AA95E0006F5D2 /* SMPhotosCVCell.m */,
 				19265D4719093D540006F5D2 /* SMAnnotation.h */,
@@ -336,7 +351,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				19A0672318FECC8400781DEA /* SMPhotoAdder.m in Sources */,
+				199F7950190E499500DF1F6C /* SMPhotoViewController.m in Sources */,
 				19265D52190AA95E0006F5D2 /* SMPhotosCVCell.m in Sources */,
+				199F794C190E438600DF1F6C /* SMPageVCDataSource.m in Sources */,
 				19A6B25718F8241C00C9D11A /* SMPhoto+methods.m in Sources */,
 				19265D4F190988430006F5D2 /* SMPhotosCVC.m in Sources */,
 				19A6B24918F6EB9B00C9D11A /* SMViewController.m in Sources */,
@@ -349,6 +366,7 @@
 				19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */,
 				19CD551618FF01C3002BD846 /* SMLocationTransformer.m in Sources */,
 				19A6B25A18F8279E00C9D11A /* SMLocation+methods.m in Sources */,
+				199F7954190E4B3F00DF1F6C /* SMPhotoScrollView.m in Sources */,
 				19A6B25418F821DE00C9D11A /* SMPhoto.m in Sources */,
 				19BC858C18F6B5CA00D9AA91 /* main.m in Sources */,
 			);
