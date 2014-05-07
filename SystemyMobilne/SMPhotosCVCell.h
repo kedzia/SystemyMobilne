@@ -10,6 +10,6 @@
 
 @interface SMPhotosCVCell : UICollectionViewCell
 
--(instancetype)initWithALAssetURL:(NSURL*) paramURL;
+-(void)viewWithALAssetURL:(NSURL*) paramURL;
 
 @end

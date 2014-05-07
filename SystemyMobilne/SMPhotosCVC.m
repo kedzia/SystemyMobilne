@@ -8,11 +8,16 @@
 
 #import "SMPhotosCVC.h"
 #import "SMPhoto.h"
+#import "SMPhotosCVCell.h"
+#import "SMPageVCDataSource.h"
+#import "SMPhotoViewController.h"
+#import  "SMPageViewController.h"
 
-@interface SMPhotosCVC () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource>
+@interface SMPhotosCVC () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultController;
 @property (strong, nonatomic) NSMutableArray *sectionChanges;
 @property (strong, nonatomic) NSMutableArray *itemChanges;
+@property (strong, nonatomic) SMPageVCDataSource *pageVCDataSource;
 
 @end
 
@@ -20,11 +25,10 @@
 
 -(instancetype)initWithRequest:(NSFetchedResultsController *)paramFetchedResultsController
 {
-    self = [super init];
+    self = [super initWithCollectionViewLayout:[self flowLayout]];
     if(self)
     {
-        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"CellID"];
-        self.collectionView.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
+        [self.collectionView registerClass:[SMPhotosCVCell class] forCellWithReuseIdentifier:@"CellID"];
         self.fetchedResultController = paramFetchedResultsController;
         self.fetchedResultController.delegate = self;
         
@@ -41,9 +45,9 @@
 - (UICollectionViewFlowLayout *) flowLayout
 {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumLineSpacing = 20.0f;
+    flowLayout.minimumLineSpacing = 10.0f;
     flowLayout.minimumInteritemSpacing = 10.0f;
-    flowLayout.itemSize = CGSizeMake(80.0f, 120.0f);
+    flowLayout.itemSize = CGSizeMake(120.0f, 160.0f);
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     flowLayout.sectionInset = UIEdgeInsetsMake(10.0f, 20.0f, 10.0f, 20.0f);
     return flowLayout;
@@ -56,20 +60,57 @@
     }
     return self;
 }
+-(void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.collectionView.delegate = self;
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(back)];
+    [self.collectionView addGestureRecognizer:swipe];
+    [self.navigationController setNavigationBarHidden:NO];
     // Do any additional setup after loading the view.
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self navigationController].navigationBarHidden = NO;
+}
+
+#pragma mark UIViewCollectionDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:indexPath];
+    if(self.pageVCDataSource ==nil)
+    {
+          self.pageVCDataSource = [[SMPageVCDataSource alloc] initWithFetchedResultController:self.fetchedResultController];
+    }
+  
+    SMPhotoViewController *pvc = [[SMPhotoViewController alloc] initWithIndex:indexPath andPhoto:photo];
+    SMPageViewController *pageVC = [[SMPageViewController alloc] init];
+    
+    pageVC.dataSource = self.pageVCDataSource;
+
+    [pageVC setViewControllers:@[pvc]
+                     direction:UIPageViewControllerNavigationDirectionForward
+                      animated:NO
+                    completion:nil];
+    
+    [[self navigationController] pushViewController:pageVC animated:YES];
 }
 
 #pragma mark UICollectionViewDataSource
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellID" forIndexPath:indexPath];
+    SMPhotosCVCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellID" forIndexPath:indexPath];
     if(cell)
     {
-        
+        SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:indexPath];
+        [cell viewWithALAssetURL:photo.photoURL];
     }
     return cell;
 }
@@ -177,5 +218,7 @@
         _itemChanges = nil;
     }];
 }
+
+
 
 @end

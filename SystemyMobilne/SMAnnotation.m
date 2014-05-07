@@ -31,6 +31,7 @@
     self = [self initWithCoordinates:paramCoordinates title:paramTitle subTitle:paramSubTitle URL:paramPhotoURL];
     if(self)
     {
+       _locationsArray = [[NSMutableArray alloc] init];
         [_locationsArray addObject:paramlocation];
     }
     return self;

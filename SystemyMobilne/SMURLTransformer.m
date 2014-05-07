@@ -22,13 +22,14 @@
 -(id)transformedValue:(id)value
 {
     NSURL *url = (id)value;
-    NSString *data = [NSString stringWithFormat:@"%@", url];
+    NSString *stringData = [NSString stringWithFormat:@"%@", url];
+    NSData *data =  [stringData dataUsingEncoding:NSUTF8StringEncoding];
     return data;
 }
 
 -(id) reverseTransformedValue:(id)value
 {
-    NSString *data = (NSString*) value;
+    NSString *data = [[NSString alloc] initWithData:(NSData*)value encoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:data];
     return url;
 }

@@ -20,14 +20,9 @@
     return self;
 }
 
--(instancetype)initWithALAssetURL:(NSURL *)paramURL
+-(void)viewWithALAssetURL:(NSURL *)paramURL
 {
-    self = [super init];
-    if(self)
-    {
-        
-    }
-    return self;
+  [self retrieveImageFromAssestsWithURL:paramURL forView:self.contentView];
 }
 
 -(void)retrieveImageFromAssestsWithURL:(NSURL*)paramURL forView:(UIView*) paramView;
@@ -41,8 +36,8 @@
             UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
             
             UIImageView *imv = [[UIImageView alloc] initWithImage:largeImage];
-            imv.autoresizingMask = UIViewContentModeScaleToFill;
-            imv.frame = CGRectMake(0, 0, 35, 35);
+            imv.autoresizingMask = UIViewContentModeScaleAspectFit;
+            imv.frame = CGRectMake(0, 0, 120, 160);
             paramView.frame = imv.frame;
             [paramView addSubview:imv];
         }

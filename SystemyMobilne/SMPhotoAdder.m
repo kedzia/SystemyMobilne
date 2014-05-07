@@ -39,36 +39,65 @@
     }
 }
 
+
+
+-(SMLocation*)checkIfSMLocationExists:(CLLocation*)location
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"SMLocation"];
+    fetchRequest.sortDescriptors = nil;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"location = %@",location];
+    fetchRequest.predicate = predicate;
+    
+    NSError *fetchError = nil;
+    NSArray *results = [self.moc executeFetchRequest:fetchRequest error:&fetchError];
+    if (fetchError)
+    {
+        NSLog(@"%@", fetchError.localizedDescription);
+    }
+    
+    return results ? [results firstObject] : nil;
+}
+
 -(void)savePhotoWithURL:(NSURL*) url Location:(CLLocation*)location inContext:(NSManagedObjectContext*)context
 {
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:location
-                   completionHandler:^(NSArray *placemarks, NSError *error){
-
-        if(placemarks != nil)
-        {
-            [context performBlock:^{
-                for(CLPlacemark *placemark in placemarks)
-                {
-                    NSLog(@"Location: %f, %f", location.coordinate.longitude, location.coordinate.latitude);
-                    NSLog(@"Placemark: %f, %f", placemark.location.coordinate.longitude, placemark.location.coordinate.latitude);
-                    
-                    SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark Location:location andContext:context];
-                    [SMPhoto initPhotoWith:url
-                                      Text:@" " andLocation:locationEntity
-                                 inContext:context];
-                }
-                [self.delegate finishedAddingPhotos];
-            }];
-           
-        }
-        else
-        {
-            NSLog(@"Error geocode %@", [error localizedDescription]);
-        }
-        
-    }];
     
+    SMLocation *existingLocation = [self checkIfSMLocationExists:location];
+    if(existingLocation == nil)
+    {
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder reverseGeocodeLocation:location
+                       completionHandler:^(NSArray *placemarks, NSError *error){
+                           
+           if(placemarks != nil)
+           {
+               [context performBlock:^{
+                   for(CLPlacemark *placemark in placemarks)
+                   {
+                       NSLog(@"Location: %f, %f", location.coordinate.longitude, location.coordinate.latitude);
+                       NSLog(@"Placemark: %f, %f", placemark.location.coordinate.longitude, placemark.location.coordinate.latitude);
+                       
+                       SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark Location:location andContext:context];
+                       [SMPhoto initPhotoWith:url
+                                         Text:@" " andLocation:locationEntity
+                                    inContext:context];
+                   }
+                   [self.delegate finishedAddingPhotos];
+               }];
+               
+           }
+           else
+           {
+               NSLog(@"Error geocode %@", [error localizedDescription]);
+           }
+           
+       }];
+    }
+    else
+    {
+        [SMPhoto initPhotoWith:url
+                          Text:@" " andLocation:existingLocation
+                     inContext:context];
+    }
     
     
     
@@ -90,6 +119,7 @@
    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {

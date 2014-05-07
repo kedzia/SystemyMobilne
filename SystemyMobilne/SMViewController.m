@@ -16,10 +16,12 @@
 #import "SMPhotoAdder.h"
 #import "SMAnnotation.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "SMPhotosCVC.h"
+
 
 #define ANNO_VIEW_ID @"SMAnnotationView"
 
-@interface SMViewController () <SMPhotoAdderProtocol, MKMapViewDelegate>
+@interface SMViewController () <SMPhotoAdderProtocol, MKMapViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) SMPhotoAdder *photoAdder;
@@ -55,18 +57,21 @@
             [self.mapView addAnnotation:annotation];
         }
     }
-
+   
 }
 
 -(void)longPressRecognized:(UILongPressGestureRecognizer*) sender
 {
     if(sender.state == UIGestureRecognizerStateBegan)
     {
-        NSLog(@"gesture");
+        
+        CLLocation *location = nil;
         CGPoint touchCoordinate = [sender locationInView:self.mapView];
+        
+        
         CLLocationCoordinate2D locCoord = [self.mapView convertPoint:touchCoordinate
                                                 toCoordinateFromView:self.mapView];
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:locCoord.latitude longitude:locCoord.longitude];
+        location = [[CLLocation alloc] initWithLatitude:locCoord.latitude longitude:locCoord.longitude];
         
         if(!self.photoAdder)
         {
@@ -93,6 +98,8 @@
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
     
     [self.mapView addGestureRecognizer:recognizer];
+    [self updateMap];
+    self.title = @"Map";
     
 }
 
@@ -130,6 +137,37 @@
     
 }
 
+-(void)annotationLongPress:(UILongPressGestureRecognizer*) sender
+{
+    if(sender.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint touchLocation = [sender locationInView:self.mapView];
+        CLLocation *location = nil;
+        for(SMAnnotation *annotation in self.mapView.annotations)
+        {
+            
+            if(CGRectContainsPoint([self.mapView viewForAnnotation:annotation].frame, touchLocation))
+            {
+                location = [(SMLocation*)[annotation.locationsArray firstObject] location];
+                break;
+            }
+            
+        }
+        if(!self.photoAdder)
+        {
+            self.photoAdder = [[SMPhotoAdder alloc] init];
+            self.photoAdder.delegate = self;
+        }
+        
+        [self.photoAdder addPhotoToLocation:location
+                           andSaveInContext:self.managedObjectContext];
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 #pragma mark mapView delegate
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -137,8 +175,13 @@
     MKPinAnnotationView *annotationView = nil;
     if([annotation isKindOfClass:[SMAnnotation class]])
     {
+        UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] init];
+        [recognizer addTarget:self action:@selector(annotationLongPress:)];
+        recognizer.delegate = self;
+        
         SMAnnotation *smAnnotation = (SMAnnotation*) annotation;
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNO_VIEW_ID];
+        [annotationView addGestureRecognizer:recognizer];
         annotationView.pinColor = MKPinAnnotationColorPurple;
         annotationView.animatesDrop = YES;
         annotationView.canShowCallout = YES;
@@ -147,6 +190,7 @@
         [accesorButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
         
         annotationView.rightCalloutAccessoryView = accesorButton;
+        annotationView.leftCalloutAccessoryView = [[UIView alloc] init];
         
         [self retrieveImageFromAssestsWithURL:smAnnotation.photoURL forView:annotationView.leftCalloutAccessoryView];
 
@@ -162,15 +206,35 @@
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    if(![view.annotation isKindOfClass:[SMAnnotation class]])
+    if([view.annotation isKindOfClass:[SMAnnotation class]])
     {
         SMAnnotation *anno = (SMAnnotation*)view.annotation;
-        //inicjalizacja UICcolectionView
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]initWithEntityName:@"SMPhoto"];
+        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"descritptionText" ascending:YES];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"location = %@"
+                                                    argumentArray:anno.locationsArray ];
+        
+        fetchRequest.sortDescriptors = [NSArray arrayWithObject:descriptor];
+        fetchRequest.predicate = predicate;
+      
+        NSFetchedResultsController *fetchedRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        SMPhotosCVC *photoCVC = [[SMPhotosCVC alloc] initWithRequest:fetchedRC];
+        photoCVC.title = anno.title;
+        
+        [[self navigationController] pushViewController:photoCVC animated:YES];
+        
+        
     }
     else
     {
         NSLog(@"Unknow annotation passed");
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self navigationController].navigationBarHidden = YES;
 }
 
 @end

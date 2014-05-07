@@ -23,7 +23,9 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.persistentStore = [[SMPersistentStore alloc] initWithStoreURl:[self storeURL] andModelURL:[self modelURL]];
     vc.managedObjectContext = self.persistentStore.managedObjectContext;
-    self.window.rootViewController = vc;
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -38,6 +40,18 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    NSAssert(self.persistentStore.managedObjectContext, @"managed object context doesn't exists");
+    
+    [self.persistentStore.managedObjectContext performBlock:^(){
+        NSError *savingError;
+        [self.persistentStore.managedObjectContext save:&savingError];
+        if(savingError != nil)
+        {
+            NSLog(@"%@",savingError.localizedDescription);
+        }
+    }];
+   
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
