@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "SMPhoto.h"
+#import "SMTextViewController.h"
 @protocol SMPhotoProtocol
 -(SMPhoto*) selectedPhoto;
 -(void)updateText:(NSString*) paramText;
 @end
-@interface SMPageViewController : UIPageViewController
-@property (weak, nonatomic) id<SMPhotoProtocol> photoDelegate;
+@interface SMPageViewController : UIPageViewController <SMPhotoTextDelegate>
+@property (weak, nonatomic) UIViewController<SMPhotoProtocol> *photoDelegate;
 
 @end

@@ -13,6 +13,7 @@
 #import "SMLocation+methods.h"
 #import "SMPhoto+methods.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface SMPhotoAdder () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 

@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "SMPhotoViewController.h"
+#import "SMPageViewController.h"
 
 @interface SMPageVCDataSource : NSObject <UIPageViewControllerDataSource>
 
 
 -(instancetype) initWithFetchedResultController:(NSFetchedResultsController *)paramfetchedResultController;
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController;
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController;
+- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController;
+- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController;
 @end

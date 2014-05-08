@@ -94,6 +94,7 @@
     SMPageViewController *pageVC = [[SMPageViewController alloc] init];
     
     pageVC.dataSource = self.pageVCDataSource;
+    pageVC.photoDelegate = pvc;
 
     [pageVC setViewControllers:@[pvc]
                      direction:UIPageViewControllerNavigationDirectionForward

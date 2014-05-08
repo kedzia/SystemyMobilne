@@ -23,44 +23,64 @@
     }
     return self;
 }
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController
+- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController
 {
     NSIndexPath *index = [NSIndexPath indexPathForItem:viewController.indexPath.item -1
                                              inSection:viewController.indexPath.section];
     if(index.item  >= 0 )
     {
-        SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
-        return [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
-        
+ 
     }
     else if(index.section > 0)
     {
-        index = [NSIndexPath indexPathForItem:0 inSection:index.section +1];
-        SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
-        return [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
+        index = [NSIndexPath indexPathForItem:0 inSection:index.section -1];
+    }
+    else
+    {
+        index = nil;
     }
     
-    return nil;
+    if(index == nil)
+    {
+        return nil;
+    }
+    
+    SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
+    SMPhotoViewController *pvc = [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
+    pageViewController.photoDelegate = pvc;
+    return pvc;
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController
+- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController
 {
     NSIndexPath *index = [NSIndexPath indexPathForItem:viewController.indexPath.item +1
                                              inSection:viewController.indexPath.section];
+    
+    
     if(index.item  <= [self maxItemIndexInSection:index.section])
     {
-        SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
-        return [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
         
     }
     else if(index.section < [self maxIndexOfSection])
     {
         index = [NSIndexPath indexPathForItem:0 inSection:index.section +1];
-        SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
-        return [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
+    }
+    else
+    {
+        index = nil;
     }
     
-    return nil;
+    if(index == nil)
+    {
+       return nil;
+    }
+
+    SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
+    SMPhotoViewController *pvc = [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
+    pageViewController.photoDelegate = pvc;
+    return pvc;
+    
+    
 }
 
 - (NSInteger) maxItemIndexInSection:(NSInteger)section
@@ -79,5 +99,15 @@
 - (NSInteger)maxIndexOfSection
 {
     return [[self.fetchedResultController sections] count] -1;
+}
+
+-(void)perfomFetch
+{
+    NSError *error = nil;
+    [self.fetchedResultController performFetch:&error];
+    if(error)
+    {
+        NSLog(@"%@", error.localizedDescription);
+    }
 }
 @end
