@@ -7,9 +7,10 @@
 //
 
 #import "SMPageViewController.h"
+#import "SMPhotoViewController.h"
 
 
-@interface SMPageViewController ()
+@interface SMPageViewController () <UIPageViewControllerDelegate>
 
 @end
 
@@ -27,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,10 +69,11 @@
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
         [self.view addGestureRecognizer:recognizer];
         
-        UIBarButtonItem * buttonItemText = [[UIBarButtonItem alloc] initWithTitle:@"Text" style:UIBarButtonItemStylePlain target:self action:@selector(textButtonTapped)];
+        UIBarButtonItem *buttonItemText = [[UIBarButtonItem alloc] initWithTitle:@"Text" style:UIBarButtonItemStylePlain target:self action:@selector(textButtonTapped)];
         UIBarButtonItem *buttonItemDelete = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteButtonTapped)];
+        UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        [self setToolbarItems:@[buttonItemText, flexibleSpaceButton, buttonItemDelete] animated:NO];
         
-        [self setToolbarItems:@[buttonItemText, buttonItemDelete] animated:NO];
     
         
     }
@@ -100,19 +102,34 @@
 {
     
     SMPhoto *photoToDel = [self.photoDelegate selectedPhoto];
-    UIViewController *vc = nil;
-    vc = [self.dataSource pageViewController:self viewControllerAfterViewController:self.photoDelegate];
+    SMPhotoViewController *vc = nil;
+    vc = (SMPhotoViewController*)[self.dataSource pageViewController:self viewControllerAfterViewController:self.photoDelegate];
+
     if (vc == nil)
     {
-        vc = [self.dataSource pageViewController:self viewControllerBeforeViewController:self.photoDelegate];
+        vc = (SMPhotoViewController*)[self.dataSource pageViewController:self viewControllerBeforeViewController:self.photoDelegate];
+    }
+    else
+    {
+        //indexes inf fetched result controller will change, so we have to adjust it properly
+        vc.indexPath = [NSIndexPath indexPathForItem:vc.indexPath.item -1 inSection:vc.indexPath.section];
     }
     
     if (vc != nil)
     {
         [photoToDel.managedObjectContext deleteObject:photoToDel];
         self.photoDelegate = (UIViewController<SMPhotoProtocol>*)vc;
-        [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-     
+      
+
+        __weak SMPageViewController* blockself = self;
+        [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){
+            if(finished)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [blockself setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];// bug fix for uipageview controller
+                });
+            }
+        }];
         return;
     }
     
@@ -124,14 +141,28 @@
     
 }
 
--(void)textForPhoto:(NSString *)paramText
-{
-    [self.photoDelegate selectedPhoto].descritptionText = paramText;
-}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self navigationController].toolbarHidden = NO;
 }
+
+#pragma mark PhotoTextVC delegate
+
+-(void)textForPhoto:(NSString *)paramText
+{
+    [self.photoDelegate selectedPhoto].descritptionText = paramText;
+}
+
+#pragma mark UIPageViewCOntrollerDelegate
+
+-(void)pageViewController:(SMPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    if(completed)
+    {
+        pageViewController.photoDelegate = self.viewControllers[0];
+    }
+}
+
 
 @end

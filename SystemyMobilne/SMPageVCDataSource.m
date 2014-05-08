@@ -46,9 +46,8 @@
     }
     
     SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
-    SMPhotoViewController *pvc = [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
-    pageViewController.photoDelegate = pvc;
-    return pvc;
+    return [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
+    
 }
 
 - (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController
@@ -76,10 +75,7 @@
     }
 
     SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:index];
-    SMPhotoViewController *pvc = [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
-    pageViewController.photoDelegate = pvc;
-    return pvc;
-    
+    return [[SMPhotoViewController alloc] initWithIndex:index andPhoto:photo];
     
 }
 
@@ -101,13 +97,4 @@
     return [[self.fetchedResultController sections] count] -1;
 }
 
--(void)perfomFetch
-{
-    NSError *error = nil;
-    [self.fetchedResultController performFetch:&error];
-    if(error)
-    {
-        NSLog(@"%@", error.localizedDescription);
-    }
-}
 @end
