@@ -37,4 +37,27 @@
     return self;
 }
 
+-(void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
+{
+    NSAssert(_locationsArray.count == 1, @"cannot drag annotation that contains many placemarks");
+    _coordinate = newCoordinate;
+    __block SMLocation *location = [_locationsArray firstObject];
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *newLocation = [[CLLocation alloc] initWithLatitude:newCoordinate.latitude longitude:newCoordinate.longitude];
+    location.location = newLocation;
+    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         if(placemarks != nil)
+         {
+             
+             location.placemark = [placemarks firstObject];
+         }
+         else
+         {
+             NSLog(@"Geocode error:%@", error.localizedDescription);
+         }
+         
+     }];
+}
+
 @end

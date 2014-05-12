@@ -30,6 +30,7 @@
     {
         self.myTextView = [[UITextView alloc] init];
         self.myTextView.text = paramText;
+        self.myTextView.textAlignment = NSTextAlignmentJustified;
     }
     return self;
 }

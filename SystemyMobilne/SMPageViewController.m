@@ -89,6 +89,7 @@
 -(void)textButtonTapped
 {
     SMTextViewController *textVC = [[SMTextViewController alloc] initWithText:[self.photoDelegate selectedPhoto].descritptionText];
+    
     textVC.delegate = self;
     [UIView animateWithDuration:0.75
                      animations:^{

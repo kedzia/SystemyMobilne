@@ -17,6 +17,7 @@
 #import "SMAnnotation.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "SMPhotosCVC.h"
+#import "SMAnnotationView.h"
 
 
 #define ANNO_VIEW_ID @"SMAnnotationView"
@@ -162,25 +163,38 @@
         [self.photoAdder addPhotoToLocation:location
                            andSaveInContext:self.managedObjectContext];
     }
+
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
 }
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    BOOL result = NO;
+    if([otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]])
+    {
+        result = YES;
+    }
+    return result;
+}
+
 #pragma mark mapView delegate
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    MKPinAnnotationView *annotationView = nil;
+    SMAnnotationView *annotationView = nil;
     if([annotation isKindOfClass:[SMAnnotation class]])
     {
         UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] init];
         [recognizer addTarget:self action:@selector(annotationLongPress:)];
         recognizer.delegate = self;
+        recognizer.allowableMovement = 0.0f;
         
         SMAnnotation *smAnnotation = (SMAnnotation*) annotation;
-        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNO_VIEW_ID];
+        annotationView = [[SMAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNO_VIEW_ID];
         [annotationView addGestureRecognizer:recognizer];
         annotationView.pinColor = MKPinAnnotationColorPurple;
         annotationView.animatesDrop = YES;
@@ -193,8 +207,6 @@
         annotationView.leftCalloutAccessoryView = [[UIView alloc] init];
         
         [self retrieveImageFromAssestsWithURL:smAnnotation.photoURL forView:annotationView.leftCalloutAccessoryView];
-
-        
     }
     else
     {
