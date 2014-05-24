@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SMPhotoScrollView : UIScrollView
+@property (readonly, strong) UIImageView *zoomingView;
 
 -(instancetype) initWithImageFromURL:(NSURL*) paramURL andFrame:(CGRect) paramFrame;
+
 @end

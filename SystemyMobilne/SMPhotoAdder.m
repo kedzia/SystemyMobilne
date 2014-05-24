@@ -9,7 +9,6 @@
 #import "SMPhotoAdder.h"
 #import "SMPersistentStore.h"
 #import "SMPhoto.h"
-#import "SMLocation.h"
 #import "SMLocation+methods.h"
 #import "SMPhoto+methods.h"
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -72,17 +71,17 @@
            if(placemarks != nil)
            {
                [context performBlock:^{
-                   for(CLPlacemark *placemark in placemarks)
-                   {
-                       NSLog(@"Location: %f, %f", location.coordinate.longitude, location.coordinate.latitude);
-                       NSLog(@"Placemark: %f, %f", placemark.location.coordinate.longitude, placemark.location.coordinate.latitude);
-                       
-                       SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark Location:location andContext:context];
-                       [SMPhoto initPhotoWith:url
-                                         Text:@" " andLocation:locationEntity
-                                    inContext:context];
-                   }
-                   [self.delegate finishedAddingPhotos];
+                   CLPlacemark *placemark = [placemarks firstObject];
+                   
+                   NSLog(@"Location: %f, %f", location.coordinate.longitude, location.coordinate.latitude);
+                   NSLog(@"Placemark: %f, %f", placemark.location.coordinate.longitude, placemark.location.coordinate.latitude);
+                   
+                   SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark Location:location andContext:context];
+                   [SMPhoto initPhotoWith:url
+                                     Text:@" " andLocation:locationEntity
+                                inContext:context];
+                   
+                   [self.delegate finishedAddingPhotosforLocation:locationEntity];
                }];
                
            }

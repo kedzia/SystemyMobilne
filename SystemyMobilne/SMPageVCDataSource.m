@@ -33,7 +33,7 @@
     }
     else if(index.section > 0)
     {
-        index = [NSIndexPath indexPathForItem:0 inSection:index.section -1];
+        index = [NSIndexPath indexPathForItem:[self maxItemIndexInSection:index.section -1] inSection:index.section -1];
     }
     else
     {

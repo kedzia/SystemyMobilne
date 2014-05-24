@@ -9,10 +9,12 @@
 #import "SMPhotoViewController.h"
 #import "SMPhotoScrollView.h"
 
+
 @interface SMPhotoViewController ()
 
 @property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) SMPhoto *photo;
+@property (strong, nonatomic) SMPhotoScrollView *scrollView;
 @end
 
 @implementation SMPhotoViewController
@@ -39,9 +41,9 @@
 
 -(void)loadView
 {
-    SMPhotoScrollView *scrollView = [[SMPhotoScrollView alloc] initWithImageFromURL:self.photo.photoURL andFrame:[UIScreen mainScreen].bounds];
-    scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.view = scrollView;
+    self.scrollView = [[SMPhotoScrollView alloc] initWithImageFromURL:self.photo.photoURL andFrame:[UIScreen mainScreen].bounds];
+    self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.view = self.scrollView;
 }
 
 - (void)viewDidLoad
@@ -69,6 +71,11 @@
 -(SMPhoto*)selectedPhoto
 {
     return self.photo;
+}
+
+-(UIImage*)getImage
+{
+    return self.scrollView.zoomingView.image;
 }
 
 @end

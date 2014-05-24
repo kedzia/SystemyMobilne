@@ -7,8 +7,7 @@
 //
 
 #import "SMPageViewController.h"
-#import "SMPhotoViewController.h"
-
+#import "SMFacebookPhotoSender.h"
 
 @interface SMPageViewController () <UIPageViewControllerDelegate>
 
@@ -64,15 +63,15 @@
         self.title = @"pageViewController";
         self.view.backgroundColor = [UIColor whiteColor];
         
-        self.automaticallyAdjustsScrollViewInsets = NO;
-        
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
         [self.view addGestureRecognizer:recognizer];
         
         UIBarButtonItem *buttonItemText = [[UIBarButtonItem alloc] initWithTitle:@"Text" style:UIBarButtonItemStylePlain target:self action:@selector(textButtonTapped)];
         UIBarButtonItem *buttonItemDelete = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteButtonTapped)];
-        UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        [self setToolbarItems:@[buttonItemText, flexibleSpaceButton, buttonItemDelete] animated:NO];
+        UIBarButtonItem *buttonItemFacebook = [[UIBarButtonItem alloc] initWithTitle:@"FB" style:UIBarButtonItemStylePlain target:self action:@selector(facebookTapped)];
+        UIBarButtonItem *flexibleSpaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *flexibleSpaceButton2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        [self setToolbarItems:@[buttonItemText, flexibleSpaceButton1, buttonItemFacebook, flexibleSpaceButton2, buttonItemDelete] animated:NO];
         
     
         
@@ -86,6 +85,13 @@
     [self navigationController].toolbarHidden = YES;
 }
 
+
+-(void)facebookTapped
+{
+    SMFacebookPhotoSender *sender = [[SMFacebookPhotoSender alloc] init];
+    [sender LogIn];
+    
+}
 -(void)textButtonTapped
 {
     SMTextViewController *textVC = [[SMTextViewController alloc] initWithText:[self.photoDelegate selectedPhoto].descritptionText];
@@ -105,32 +111,50 @@
     SMPhoto *photoToDel = [self.photoDelegate selectedPhoto];
     SMPhotoViewController *vc = nil;
     vc = (SMPhotoViewController*)[self.dataSource pageViewController:self viewControllerAfterViewController:self.photoDelegate];
-
+    BOOL directionFowrward = YES;
+  
     if (vc == nil)
     {
         vc = (SMPhotoViewController*)[self.dataSource pageViewController:self viewControllerBeforeViewController:self.photoDelegate];
+        directionFowrward = NO;
     }
-    else
+    else if(self.photoDelegate.indexPath.section == vc.indexPath.section)
     {
         //indexes inf fetched result controller will change, so we have to adjust it properly
         vc.indexPath = [NSIndexPath indexPathForItem:vc.indexPath.item -1 inSection:vc.indexPath.section];
     }
+    else if(self.photoDelegate.indexPath.section != vc.indexPath.section)
+    {
+        vc.indexPath = [NSIndexPath indexPathForItem:vc.indexPath.item inSection:vc.indexPath.section -1];
+    }
     
+   
     if (vc != nil)
     {
         [photoToDel.managedObjectContext deleteObject:photoToDel];
-        self.photoDelegate = (UIViewController<SMPhotoProtocol>*)vc;
+        self.photoDelegate = vc;
       
-
         __weak SMPageViewController* blockself = self;
-        [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){
+        
+        void (^completionBlock)(BOOL) = ^(BOOL finished){
             if(finished)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [blockself setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];// bug fix for uipageview controller
                 });
             }
-        }];
+        };
+
+       
+        
+        if(directionFowrward == YES)
+        {
+            [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:completionBlock];
+        }
+        else
+        {
+            [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:completionBlock];
+        }
         return;
     }
     

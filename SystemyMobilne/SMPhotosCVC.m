@@ -60,17 +60,11 @@
     }
     return self;
 }
--(void)back
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.collectionView.delegate = self;
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(back)];
-    [self.collectionView addGestureRecognizer:swipe];
     [self.navigationController setNavigationBarHidden:NO];
     // Do any additional setup after loading the view.
 }

@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import "SMLocation.h"
 
 @protocol SMPhotoAdderProtocol
--(void)finishedAddingPhotos;
+-(void)finishedAddingPhotosforLocation:(SMLocation*) paramLocation;
 @end
 @interface SMPhotoAdder : NSObject
 @property (weak, nonatomic) UIViewController<SMPhotoAdderProtocol> *delegate;

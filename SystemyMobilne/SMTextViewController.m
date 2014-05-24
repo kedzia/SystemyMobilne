@@ -10,6 +10,8 @@
 
 @interface SMTextViewController () <UITextViewDelegate>
 @property (strong, nonatomic) UITextView *myTextView;
+@property (strong, nonatomic) UIBarButtonItem *editButton;
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
 @end
 
 @implementation SMTextViewController
@@ -51,11 +53,28 @@
     [super viewDidLoad];
     self.myTextView.frame = self.view.bounds;
     self.myTextView.font = [UIFont systemFontOfSize:16.0f];
+    
     [self.view addSubview:self.myTextView];
     self.myTextView.delegate = self;
+
+    self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed)];
+    self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
-    
+    self.navigationItem.rightBarButtonItem = self.editButton;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
+}
+
+
+-(void)editButtonPressed
+{
+    self.navigationItem.rightBarButtonItem = self.doneButton;
+    [self.myTextView becomeFirstResponder];
+}
+-(void) doneButtonPressed
+{
+    self.navigationItem.rightBarButtonItem = self.editButton;
+    [self.myTextView resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,6 +144,9 @@
 
 -(void)handleKeyBoardWillHide
 {
-    self.myTextView.contentInset = UIEdgeInsetsZero;
+    CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+    float topInset = [self navigationController].navigationBar.frame.size.height + MIN(statusBarSize.width, statusBarSize.height);
+    self.myTextView.contentInset = UIEdgeInsetsMake(topInset, 0, 0,0);
+
 }
 @end

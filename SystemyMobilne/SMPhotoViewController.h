@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SMPhoto.h"
-#import "SMPageViewController.h"
 
-@interface SMPhotoViewController : UIViewController <SMPhotoProtocol>
+@interface SMPhotoViewController : UIViewController
 
 @property (strong, nonatomic) NSIndexPath *indexPath;
 
 -(instancetype) initWithIndex:(NSIndexPath*) paramIndexPath andPhoto:(SMPhoto*)paramPhoto;
+-(SMPhoto*) selectedPhoto;
+-(void)updateText:(NSString *)paramText;
+-(UIImage*)getImage;
 @end

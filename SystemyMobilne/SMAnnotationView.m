@@ -21,6 +21,22 @@
     return self;
 }
 
+-(id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
+    if(self)
+    {
+        self.pinColor = MKPinAnnotationColorPurple;
+        self.animatesDrop = YES;
+        self.canShowCallout = YES;
+        if([(SMAnnotation*)annotation locationsArray].count >1)
+        {
+            self.pinColor = MKPinAnnotationColorGreen;
+        }
+    }
+    return self;
+}
+
 -(BOOL)isDraggable
 {
     SMAnnotation *anno =(SMAnnotation*) self.annotation;

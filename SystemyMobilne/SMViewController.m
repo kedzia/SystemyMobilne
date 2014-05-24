@@ -21,44 +21,85 @@
 
 
 #define ANNO_VIEW_ID @"SMAnnotationView"
+#define iphoneScaleFactorLatitude 10.0f
+#define iphoneScaleFactorLongitude 10.0f
 
 @interface SMViewController () <SMPhotoAdderProtocol, MKMapViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) SMPhotoAdder *photoAdder;
+@property (nonatomic) MKZoomScale previousZoomScale;
+@property (strong, nonatomic) NSMutableArray *locationsArray;
+@property (strong, nonatomic) SMAnnotation * lastModifiedAnnotation;
 
 
 @end
 
 @implementation SMViewController
 
--(void)finishedAddingPhotos
+-(void)finishedAddingPhotosforLocation:(SMLocation *)paramLocation
 {
-    [self updateMap];
+    [self addAnnotationForLocation:paramLocation];
+    [self.locationsArray addObject:paramLocation];
+
 }
 
 
--(void)updateMap
+- (void)addAnnotationForLocation:(SMLocation *)location
+{
+    SMAnnotation *annotation = [[SMAnnotation alloc]
+                                initWithCoordinates:location.location.coordinate
+                                title:location.name
+                                subTitle:nil
+                                URL:[[location.photos anyObject] photoURL]
+                                location:location];
+    
+    [self.mapView addAnnotation:annotation];
+}
+
+-(void)loadMap
 {
     [self.mapView removeAnnotations:self.mapView.annotations];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"SMLocation"];
     NSError *requestError = nil;
     NSArray *locationArray = [self.managedObjectContext executeFetchRequest:request error:&requestError];
     if(requestError == nil)
-    {
-        for(SMLocation *location in locationArray)
+    {   if(self.locationsArray == nil)
         {
-            SMAnnotation *annotation = [[SMAnnotation alloc]
-                                        initWithCoordinates:location.location.coordinate
-                                        title:location.name
-                                        subTitle:nil
-                                        URL:[[location.photos anyObject] photoURL]
-                                        location:location];
-            
-            [self.mapView addAnnotation:annotation];
+            self.locationsArray = [[NSMutableArray alloc] initWithCapacity:locationArray.count];
         }
+        [self.locationsArray addObjectsFromArray:locationArray];
+        [self updateMap];
     }
    
+}
+
+-(void) updateMap
+{
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    float latDelta= iphoneScaleFactorLatitude;
+    float longDelta= iphoneScaleFactorLongitude;
+    BOOL found = NO;
+    for(SMLocation *location in self.locationsArray)
+    {
+        CGPoint loc =[self.mapView convertCoordinate:location.location.coordinate toPointToView:self.mapView];
+        for(SMAnnotation *anno in self.mapView.annotations)
+        {
+            CGPoint annoPoint = [self.mapView convertCoordinate:anno.coordinate toPointToView:self.mapView];
+            if(abs(annoPoint.x-loc.x)<latDelta &&
+               abs(annoPoint.y - loc.y)<longDelta)
+            {
+                found = YES;
+                [anno.locationsArray addObject:location];
+                break;
+            }
+        }
+        if(found == NO)
+        {
+            [self addAnnotationForLocation:location];
+        }
+        found = NO;
+    }
 }
 
 -(void)longPressRecognized:(UILongPressGestureRecognizer*) sender
@@ -99,9 +140,9 @@
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
     
     [self.mapView addGestureRecognizer:recognizer];
-    [self updateMap];
+    [self loadMap];
     self.title = @"Map";
-    
+    self.previousZoomScale = [self zoomLevelForMap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -146,7 +187,6 @@
         CLLocation *location = nil;
         for(SMAnnotation *annotation in self.mapView.annotations)
         {
-            
             if(CGRectContainsPoint([self.mapView viewForAnnotation:annotation].frame, touchLocation))
             {
                 location = [(SMLocation*)[annotation.locationsArray firstObject] location];
@@ -183,6 +223,20 @@
 
 #pragma mark mapView delegate
 
+- (MKZoomScale)zoomLevelForMap
+{
+    MKZoomScale zoomScale = self.mapView.bounds.size.width/self.mapView.visibleMapRect.size.width;
+    return zoomScale;
+}
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    if(self.previousZoomScale != [self zoomLevelForMap])
+    {
+        [self updateMap];
+    }
+    self.previousZoomScale = [self zoomLevelForMap];
+}
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     SMAnnotationView *annotationView = nil;
@@ -195,10 +249,10 @@
         
         SMAnnotation *smAnnotation = (SMAnnotation*) annotation;
         annotationView = [[SMAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNO_VIEW_ID];
-        [annotationView addGestureRecognizer:recognizer];
-        annotationView.pinColor = MKPinAnnotationColorPurple;
-        annotationView.animatesDrop = YES;
-        annotationView.canShowCallout = YES;
+        if(smAnnotation.locationsArray.count == 1)
+        {
+            [annotationView addGestureRecognizer:recognizer];
+        }
         
         UIButton *accesorButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         [accesorButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
@@ -222,16 +276,17 @@
     {
         SMAnnotation *anno = (SMAnnotation*)view.annotation;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]initWithEntityName:@"SMPhoto"];
-        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"descritptionText" ascending:YES];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"location = %@"
-                                                    argumentArray:anno.locationsArray ];
+        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"location.name" ascending:YES];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"location IN %@", anno.locationsArray];
         
         fetchRequest.sortDescriptors = [NSArray arrayWithObject:descriptor];
         fetchRequest.predicate = predicate;
       
-        NSFetchedResultsController *fetchedRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        NSFetchedResultsController *fetchedRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"location.name" cacheName:nil];
         SMPhotosCVC *photoCVC = [[SMPhotosCVC alloc] initWithRequest:fetchedRC];
         photoCVC.title = anno.title;
+        
+        self.lastModifiedAnnotation = anno;
         
         [[self navigationController] pushViewController:photoCVC animated:YES];
         
@@ -243,10 +298,31 @@
     }
 }
 
+-(void)checkIfAnnotationIsValid:(SMAnnotation*) annotation
+{
+    int emptyLocationCounter = 0;
+    for(SMLocation *location in annotation.locationsArray)
+    {
+        if(location.photos.count == 0)
+        {
+            [self.locationsArray removeObject:location];
+            emptyLocationCounter ++;
+        }
+    }
+    if(emptyLocationCounter == annotation.locationsArray.count)
+    {
+        [self.mapView removeAnnotations:@[annotation]];
+    }
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self navigationController].navigationBarHidden = YES;
+    if(self.lastModifiedAnnotation)
+    {
+        [self checkIfAnnotationIsValid:self.lastModifiedAnnotation];
+    }
 }
 
 @end

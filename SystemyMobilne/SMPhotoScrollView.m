@@ -12,8 +12,8 @@
 @interface SMPhotoScrollView () <UIScrollViewDelegate>
 {
     CGSize _imageSize;
-    UIImageView *_zoomingView;
 }
+@property (readwrite, strong) UIImageView *zoomingView;
 @end
 @implementation SMPhotoScrollView
 
