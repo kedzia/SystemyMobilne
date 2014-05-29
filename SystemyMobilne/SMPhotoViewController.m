@@ -60,8 +60,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - SMPhotoPortocol 
+#pragma mark NSCoding Protocol
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.indexPath forKey:@"indexPath"];
+    [aCoder encodeObject:self.photo forKey:@"photo"];
+}
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    NSIndexPath *indexPath = [aDecoder decodeObjectForKey:@"indexPath"];
+    SMPhoto *photo = [aDecoder decodeObjectForKey:@"photo"];
+    return [[SMPhotoViewController alloc] initWithIndex:indexPath andPhoto:photo];
+}
+#pragma mark - SMPhotoProtocol
 
 -(void)updateText:(NSString *)paramText
 {

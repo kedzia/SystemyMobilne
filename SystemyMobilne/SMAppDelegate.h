@@ -15,5 +15,6 @@
 
 
 - (NSURL *)applicationDocumentsDirectory;
+-(NSManagedObjectContext*)sharedManagedObjectContext;
 
 @end

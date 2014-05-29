@@ -94,6 +94,8 @@
              if (!error) {
                  
                  NSLog(@"Photo uploaded successfuly! %@",result);
+                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Photo Uploaded successfuly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                 [alertView show];
                  
              } else {
                  
@@ -145,8 +147,59 @@
                 }];
     }
     
-    [self checkIfAlbumExists:albumName andUploadPhotos:photosArray];
+    
+    //    CHECKING FOR PARMISSION COPY_PASTE FROM FB SDK TUTORIAL
+    NSArray *permissionsNeeded = @[@"publish_actions", @"user_photos"];
+    
+    // Request the permissions the user currently has
+    [FBRequestConnection startWithGraphPath:@"/me/permissions"
+              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                  if (!error){
+                      // These are the current permissions the user has:
+                      NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
+                      
+                      // We will store here the missing permissions that we will have to request
+                      NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
+                      
+                      // Check if all the permissions we need are present in the user's current permissions
+                      // If they are not present add them to the permissions to be requested
+                      for (NSString *permission in permissionsNeeded){
+                          if (![currentPermissions objectForKey:permission]){
+                              [requestPermissions addObject:permission];
+                          }
+                      }
+                      
+                      // If we have permissions to request
+                      if ([requestPermissions count] > 0)
+                      {
+                          // Ask for the missing permissions
+                          [FBSession.activeSession
+                           requestNewReadPermissions:requestPermissions
+                           completionHandler:^(FBSession *session, NSError *error) {
+                               if (!error) {
+                                   // Permission granted
+                                   NSLog(@"new permissions %@", [FBSession.activeSession permissions]);
+                                   // We can request the user information
+                                   [self checkIfAlbumExists:albumName andUploadPhotos:photosArray];
+                               }
+                               else
+                               {
+                                   NSLog(@"ERROR PERMISSION :%@",error.localizedDescription);
+                               }
+                           }];
+                      }
+                      else
+                      {
+                          // Permissions are present
+                          // We can request the user information
+                          [self checkIfAlbumExists:albumName andUploadPhotos:photosArray];
+                      }
+                  }
+                  
+              }];
 }
+
+
 
 
 

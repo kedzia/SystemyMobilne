@@ -38,9 +38,8 @@
         self.bounces = YES;
         self.delegate = self;
         self.backgroundColor = [UIColor clearColor];
-        
-        
     }
+    
     return self;
 }
 

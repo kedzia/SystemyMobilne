@@ -10,4 +10,5 @@
 
 @interface SMViewController : UIViewController 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
+- (NSFetchedResultsController *)createFetchRCforPhtotWithPredicate:(NSPredicate*)paramPredicate;
 @end

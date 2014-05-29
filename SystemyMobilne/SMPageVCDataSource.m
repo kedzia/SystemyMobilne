@@ -23,7 +23,7 @@
     }
     return self;
 }
-- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController
 {
     NSIndexPath *index = [NSIndexPath indexPathForItem:viewController.indexPath.item -1
                                              inSection:viewController.indexPath.section];
@@ -50,7 +50,7 @@
     
 }
 
-- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController
 {
     NSIndexPath *index = [NSIndexPath indexPathForItem:viewController.indexPath.item +1
                                              inSection:viewController.indexPath.section];

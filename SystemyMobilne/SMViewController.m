@@ -130,6 +130,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.restorationIdentifier = @"SMViewController";
     }
     return self;
 }
@@ -143,6 +144,7 @@
     [self loadMap];
     self.title = @"Map";
     self.previousZoomScale = [self zoomLevelForMap];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -221,6 +223,26 @@
     return result;
 }
 
+#pragma mark state preservation and restoration
+
+-(void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+     if(self.mapView)
+     {
+         [coder encodeObject:self.mapView.camera forKey:@"camera"];
+     }
+}
+
+-(void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    MKMapCamera *camera = [coder decodeObjectForKey:@"camera"];
+    if(camera)
+    {
+        self.mapView.camera = camera;
+    }
+}
+
 #pragma mark mapView delegate
 
 - (MKZoomScale)zoomLevelForMap
@@ -270,21 +292,27 @@
     return annotationView;
 }
 
+- (NSFetchedResultsController *)createFetchRCforPhtotWithPredicate:(NSPredicate*)paramPredicate
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]initWithEntityName:@"SMPhoto"];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"location.name" ascending:YES];
+    fetchRequest.sortDescriptors = [NSArray arrayWithObject:descriptor];
+    fetchRequest.predicate = paramPredicate;
+    
+    NSFetchedResultsController *fetchedRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"location.name" cacheName:nil];
+    return fetchedRC;
+}
+
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     if([view.annotation isKindOfClass:[SMAnnotation class]])
     {
         SMAnnotation *anno = (SMAnnotation*)view.annotation;
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]initWithEntityName:@"SMPhoto"];
-        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"location.name" ascending:YES];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"location IN %@", anno.locationsArray];
-        
-        fetchRequest.sortDescriptors = [NSArray arrayWithObject:descriptor];
-        fetchRequest.predicate = predicate;
-      
-        NSFetchedResultsController *fetchedRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"location.name" cacheName:nil];
+        NSFetchedResultsController *fetchedRC = [self createFetchRCforPhtotWithPredicate:predicate];
         SMPhotosCVC *photoCVC = [[SMPhotosCVC alloc] initWithRequest:fetchedRC];
         photoCVC.title = anno.title;
+        photoCVC.restorationIdentifier = @"PhotosCVC";
         
         self.lastModifiedAnnotation = anno;
         

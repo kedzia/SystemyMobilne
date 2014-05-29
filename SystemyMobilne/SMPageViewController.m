@@ -9,7 +9,7 @@
 #import "SMPageViewController.h"
 #import "SMFacebookPhotoSender.h"
 
-@interface SMPageViewController () <UIPageViewControllerDelegate>
+@interface SMPageViewController () <UIPageViewControllerDelegate, UIViewControllerRestoration>
 
 @end
 
@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     self.delegate = self;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,7 +36,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)tapped:(UITapGestureRecognizer*) sender
+- (void)tapped:(UITapGestureRecognizer*) sender
 {
     [[self navigationController] setNavigationBarHidden:(![self navigationController].navigationBarHidden) animated:YES];
     
@@ -51,7 +52,7 @@
         [self navigationController].toolbarHidden = NO;
     }
 }
--(id)init
+- (instancetype)init
 {
     self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                     navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
@@ -59,7 +60,6 @@
     
     if(self)
     {
-       
         self.title = @"pageViewController";
         self.view.backgroundColor = [UIColor whiteColor];
         
@@ -73,26 +73,29 @@
         UIBarButtonItem *flexibleSpaceButton2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         [self setToolbarItems:@[buttonItemText, flexibleSpaceButton1, buttonItemFacebook, flexibleSpaceButton2, buttonItemDelete] animated:NO];
         
-    
-        
+        self.restorationIdentifier = @"SMPageViewController";
+        self.restorationClass = [self class];
     }
-    return self;
     
+    return self;
 }
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self navigationController].toolbarHidden = YES;
 }
 
-
--(void)facebookTapped
+- (void)facebookTapped
 {
     SMFacebookPhotoSender *sender = [[SMFacebookPhotoSender alloc] init];
-    [sender LogIn];
+    NSArray *photos = [NSArray arrayWithObject:[self.photoDelegate getImage]];
+    NSString *albumName = [[[self.photoDelegate selectedPhoto] location] name];
+    [sender LogInAndUploadPhotos:photos toAlbum:albumName];
     
 }
--(void)textButtonTapped
+
+- (void)textButtonTapped
 {
     SMTextViewController *textVC = [[SMTextViewController alloc] initWithText:[self.photoDelegate selectedPhoto].descritptionText];
     
@@ -105,7 +108,7 @@
                      }];
 }
 
--(void)deleteButtonTapped
+- (void)deleteButtonTapped
 {
     
     SMPhoto *photoToDel = [self.photoDelegate selectedPhoto];
@@ -147,7 +150,7 @@
 
        
         
-        if(directionFowrward == YES)
+        if(directionFowrward)
         {
             [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:completionBlock];
         }
@@ -166,22 +169,58 @@
     
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self navigationController].toolbarHidden = NO;
 }
 
+#pragma mark state restoration
+
++ (UIViewController*)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    SMPageViewController *pageVC = [[self alloc] init];
+    pageVC.restorationIdentifier = @"SMPageViewController";
+    pageVC.restorationClass = [pageVC class];
+    
+    NSIndexPath *indexPath = [coder decodeObjectForKey:@"indexPath"];
+    SMPhoto *photo = [coder decodeObjectForKey:@"photo"];
+    SMPhotoViewController *child =  [[SMPhotoViewController alloc] initWithIndex:indexPath andPhoto:photo];
+    [pageVC setViewControllers:@[child]
+                     direction:UIPageViewControllerNavigationDirectionForward
+                      animated:NO
+                    completion:nil];
+    pageVC.dataSource = [coder decodeObjectForKey:@"dataSource"];
+    pageVC.photoDelegate = child;
+    return pageVC;
+
+}
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+    [coder encodeObject:self.dataSource forKey:@"dataSource"];
+    SMPhotoViewController *child = self.viewControllers[0];
+    [coder encodeObject:child.indexPath forKey:@"indexPath"];
+    [coder encodeObject:[self.photoDelegate selectedPhoto] forKey:@"photo"];
+    [coder encodeObject:self.title forKey:@"title"];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    self.title = [coder decodeObjectForKey:@"title"];
+}
+
 #pragma mark PhotoTextVC delegate
 
--(void)textForPhoto:(NSString *)paramText
+- (void)textForPhoto:(NSString *)paramText
 {
     [self.photoDelegate selectedPhoto].descritptionText = paramText;
 }
 
 #pragma mark UIPageViewCOntrollerDelegate
 
--(void)pageViewController:(SMPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+- (void)pageViewController:(SMPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     if(completed)
     {

@@ -13,7 +13,7 @@
 #import "SMPhotoViewController.h"
 #import  "SMPageViewController.h"
 
-@interface SMPhotosCVC () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface SMPhotosCVC () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIPageViewControllerDataSource>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultController;
 @property (strong, nonatomic) NSMutableArray *sectionChanges;
 @property (strong, nonatomic) NSMutableArray *itemChanges;
@@ -75,20 +75,29 @@
     [self navigationController].navigationBarHidden = NO;
 }
 
+#pragma mark state restoration
+
+-(void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.fetchedResultController.fetchRequest.predicate forKey:@"predicate"];
+    [super encodeRestorableStateWithCoder:coder];
+}
+-(void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+}
+
 #pragma mark UIViewCollectionDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:indexPath];
-    if(self.pageVCDataSource ==nil)
-    {
-          self.pageVCDataSource = [[SMPageVCDataSource alloc] initWithFetchedResultController:self.fetchedResultController];
-    }
-  
+
     SMPhotoViewController *pvc = [[SMPhotoViewController alloc] initWithIndex:indexPath andPhoto:photo];
     SMPageViewController *pageVC = [[SMPageViewController alloc] init];
     
-    pageVC.dataSource = self.pageVCDataSource;
+    pageVC.dataSource = self;
     pageVC.photoDelegate = pvc;
+    pageVC.title = photo.location.name;
 
     [pageVC setViewControllers:@[pvc]
                      direction:UIPageViewControllerNavigationDirectionForward
@@ -133,6 +142,25 @@
 {
     NSLog(@"suplementary view method called in UICollectionView");
     return nil;
+}
+#pragma mark UIPageViewController Data Source
+
+-(UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController
+{
+    if(self.pageVCDataSource == nil)
+    {
+        self.pageVCDataSource = [[SMPageVCDataSource alloc] initWithFetchedResultController:self.fetchedResultController];
+    }
+    return [self.pageVCDataSource pageViewController:pageViewController viewControllerAfterViewController:viewController];
+}
+
+-(UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController
+{
+    if(self.pageVCDataSource == nil)
+    {
+        self.pageVCDataSource = [[SMPageVCDataSource alloc] initWithFetchedResultController:self.fetchedResultController];
+    }
+    return [self.pageVCDataSource pageViewController:pageViewController viewControllerBeforeViewController:viewController];
 }
 
 #pragma mark  NSFetchedResultsControllerDelegate

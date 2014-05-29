@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SMPhoto.h"
+#import "SMLocation.h"
 #import "SMTextViewController.h"
 #import "SMPhotoViewController.h"
 

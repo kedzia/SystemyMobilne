@@ -15,6 +15,6 @@
 
 -(instancetype) initWithFetchedResultController:(NSFetchedResultsController *)paramfetchedResultController;
 
-- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController;
-- (UIViewController *)pageViewController:(SMPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SMPhotoViewController *)viewController;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SMPhotoViewController *)viewController;
 @end

@@ -8,6 +8,7 @@
 
 #import "SMAppDelegate.h"
 #import "SMViewController.h"
+#import "SMPhotosCVC.h"
 #import <FacebookSDK/FacebookSDK.h>
 @interface SMAppDelegate()
 @property (strong, nonatomic) SMPersistentStore *persistentStore;
@@ -16,7 +17,7 @@
 
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -26,11 +27,42 @@
     vc.managedObjectContext = self.persistentStore.managedObjectContext;
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    navController.restorationIdentifier = @"navController";
     self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
     return YES;
 }
 
+-(BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+-(BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+-(NSManagedObjectContext*)sharedManagedObjectContext
+{
+    return self.persistentStore.managedObjectContext;
+}
+-(UIViewController*)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    UIViewController* result;
+    if([[identifierComponents lastObject] isEqualToString:@"PhotosCVC"])
+    {
+        NSPredicate* predicate = [coder decodeObjectForKey:@"predicate"];
+        NSFetchedResultsController *frc = [[(UINavigationController*)self.window.rootViewController viewControllers][0] createFetchRCforPhtotWithPredicate:predicate];
+        result = [[SMPhotosCVC alloc] initWithRequest:frc];
+        result.restorationIdentifier = @"PhotosCVC";
+    }
+    else if ([[identifierComponents lastObject] isEqualToString:@"SMViewController"])
+    {
+        result = [(UINavigationController*)self.window.rootViewController viewControllers][0];
+    }
+    return result;
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -50,6 +82,10 @@
         if(savingError != nil)
         {
             NSLog(@"%@",savingError.localizedDescription);
+        }
+        else
+        {
+            NSLog(@"saving Core Date success");
         }
     }];
    

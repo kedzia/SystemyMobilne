@@ -12,7 +12,7 @@
 
 @class SMPhoto;
 
-@interface SMLocation : NSManagedObject
+@interface SMLocation : NSManagedObject <NSCoding>
 
 @property (nonatomic, retain) CLPlacemark *placemark;
 @property (nonatomic, retain) CLLocation *location;
@@ -26,5 +26,7 @@
 - (void)removePhotosObject:(SMPhoto *)value;
 - (void)addPhotos:(NSSet *)values;
 - (void)removePhotos:(NSSet *)values;
+
+
 
 @end

@@ -11,7 +11,7 @@
 
 @class SMLocation;
 
-@interface SMPhoto : NSManagedObject
+@interface SMPhoto : NSManagedObject <NSCoding>
 
 @property (nonatomic, retain) NSURL * photoURL;
 @property (nonatomic, retain) NSString * descritptionText;

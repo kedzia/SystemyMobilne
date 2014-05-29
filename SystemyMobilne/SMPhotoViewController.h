@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SMPhoto.h"
 
-@interface SMPhotoViewController : UIViewController
+@interface SMPhotoViewController : UIViewController <NSCoding>
 
 @property (strong, nonatomic) NSIndexPath *indexPath;
 
@@ -17,4 +17,6 @@
 -(SMPhoto*) selectedPhoto;
 -(void)updateText:(NSString *)paramText;
 -(UIImage*)getImage;
+-(void)encodeWithCoder:(NSCoder *)aCoder;
+-(id)initWithCoder:(NSCoder *)aDecoder;
 @end

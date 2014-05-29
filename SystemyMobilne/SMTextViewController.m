@@ -8,7 +8,7 @@
 
 #import "SMTextViewController.h"
 
-@interface SMTextViewController () <UITextViewDelegate>
+@interface SMTextViewController () <UITextViewDelegate, UIViewControllerRestoration>
 @property (strong, nonatomic) UITextView *myTextView;
 @property (strong, nonatomic) UIBarButtonItem *editButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
@@ -25,7 +25,7 @@
     return self;
 }
 
--(instancetype)initWithText:(NSString *)paramText
+- (instancetype)initWithText:(NSString *)paramText
 {
     self = [super init];
     if(self)
@@ -33,16 +33,19 @@
         self.myTextView = [[UITextView alloc] init];
         self.myTextView.text = paramText;
         self.myTextView.textAlignment = NSTextAlignmentJustified;
+        self.restorationIdentifier = @"SMTextViewController";
+        self.restorationClass = [self class];
     }
+    
     return self;
 }
 
--(id)init
+- (id)init
 {
    return [self initWithText:@""];
 }
 
--(void)loadView
+- (void)loadView
 {
     UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.view = view;
@@ -61,7 +64,6 @@
     self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
     self.navigationItem.rightBarButtonItem = self.editButton;
-    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
 }
 
@@ -129,9 +131,32 @@
     [textView scrollRectToVisible:rect animated:animated];
 }
 
+#pragma mark restoration
+
++ (UIViewController*)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    NSString *text = [coder decodeObjectForKey:@"text"];
+    SMTextViewController *textVC = [[SMTextViewController alloc] initWithText:text];
+    
+    return textVC;
+}
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.myTextView.text forKey:@"text"];
+    [coder encodeObject:self.delegate forKey:@"delegate"];
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    self.delegate = [coder decodeObjectForKey:@"delegate"];
+}
+
 #pragma mark keyboard notification handlers
 
--(void)handleKeyboardDidShow:(NSNotification*) paramNotification
+- (void)handleKeyboardDidShow:(NSNotification*) paramNotification
 {
     NSDictionary *dict = [paramNotification userInfo];
     CGRect keyboardRect = [dict[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -142,7 +167,7 @@
     self.myTextView.contentInset = UIEdgeInsetsMake(topInset, 0, keyboardRect.size.height, 0);
 }
 
--(void)handleKeyBoardWillHide
+- (void)handleKeyBoardWillHide
 {
     CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
     float topInset = [self navigationController].navigationBar.frame.size.height + MIN(statusBarSize.width, statusBarSize.height);
