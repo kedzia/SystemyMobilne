@@ -7,6 +7,7 @@
 //
 
 #import "SMLocation+methods.h"
+#import "SMAppDelegate.h"
 
 @implementation SMLocation (methods)
 +(instancetype)initLocationWithPlacemark:(CLPlacemark *)placemark
@@ -38,5 +39,19 @@
                                         Location:location
                                             Name:parsedName
                                       andContext:context];
+}
+
+
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:[self.objectID URIRepresentation] forKey:@"managedObjectID"];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    NSURL*   url = [aDecoder decodeObjectForKey:@"managedObjectID"];
+    NSManagedObjectContext *moc = [(SMAppDelegate*)[[UIApplication sharedApplication] delegate] sharedManagedObjectContext];
+    NSManagedObjectID*   oid = [moc.persistentStoreCoordinator managedObjectIDForURIRepresentation:url];
+    return (SMLocation*)[moc objectWithID:oid];
 }
 @end

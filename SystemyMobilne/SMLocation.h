@@ -12,7 +12,7 @@
 
 @class SMPhoto;
 
-@interface SMLocation : NSManagedObject <NSCoding>
+@interface SMLocation : NSManagedObject
 
 @property (nonatomic, retain) CLPlacemark *placemark;
 @property (nonatomic, retain) CLLocation *location;

@@ -16,5 +16,5 @@
 @interface SMPhotoAdder : NSObject
 @property (weak, nonatomic) UIViewController<SMPhotoAdderProtocol> *delegate;
 -(void)addPhotoToLocation:(CLLocation *)location andSaveInContext:(NSManagedObjectContext*)context;
-
+-(void)takePhotoInLocation:(CLLocation *)location andSaveInContext:(NSManagedObjectContext *)context;
 @end

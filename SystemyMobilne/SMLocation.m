@@ -18,17 +18,6 @@
 @dynamic name;
 @dynamic location;
 
--(void)encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:[self.objectID URIRepresentation] forKey:@"managedObjectID"];
-}
 
--(id)initWithCoder:(NSCoder *)aDecoder
-{
-    NSURL*   url = [aDecoder decodeObjectForKey:@"managedObjectID"];
-    NSManagedObjectContext *moc = [(SMAppDelegate*)[[UIApplication sharedApplication] delegate] sharedManagedObjectContext];
-    NSManagedObjectID*   oid = [moc.persistentStoreCoordinator managedObjectIDForURIRepresentation:url];
-    return (SMLocation*)[moc objectWithID:oid];
-}
 
 @end

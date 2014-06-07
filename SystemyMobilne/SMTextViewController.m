@@ -143,6 +143,7 @@
 
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
+    [coder encodeBool:[self.myTextView isFirstResponder] forKey:@"keyboard"];
     [coder encodeObject:self.myTextView.text forKey:@"text"];
     [coder encodeObject:self.delegate forKey:@"delegate"];
     [super encodeRestorableStateWithCoder:coder];
@@ -152,12 +153,18 @@
 {
     [super decodeRestorableStateWithCoder:coder];
     self.delegate = [coder decodeObjectForKey:@"delegate"];
+    BOOL keyboard = [coder decodeBoolForKey:@"keyboard"];
+    if(keyboard)
+    {
+        [self.myTextView becomeFirstResponder];
+    }
 }
 
 #pragma mark keyboard notification handlers
 
 - (void)handleKeyboardDidShow:(NSNotification*) paramNotification
 {
+    self.navigationItem.rightBarButtonItem = self.doneButton;
     NSDictionary *dict = [paramNotification userInfo];
     CGRect keyboardRect = [dict[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.myTextView convertRect:keyboardRect fromView:nil];

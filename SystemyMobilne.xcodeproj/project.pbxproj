@@ -7,10 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190862E5194073FF0035D017 /* ELCAlbumPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190862D4194073FF0035D017 /* ELCAlbumPickerController.m */; };
+		190862E6194073FF0035D017 /* ELCAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 190862D6194073FF0035D017 /* ELCAsset.m */; };
+		190862E7194073FF0035D017 /* ELCAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 190862D8194073FF0035D017 /* ELCAssetCell.m */; };
+		190862E8194073FF0035D017 /* ELCAssetTablePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 190862DC194073FF0035D017 /* ELCAssetTablePicker.m */; };
+		190862E9194073FF0035D017 /* ELCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190862DE194073FF0035D017 /* ELCImagePickerController.m */; };
+		190862EA194073FF0035D017 /* ELCAlbumPickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 190862E0194073FF0035D017 /* ELCAlbumPickerController.xib */; };
+		190862EB194073FF0035D017 /* ELCAssetPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 190862E1194073FF0035D017 /* ELCAssetPicker.xib */; };
+		190862EC194073FF0035D017 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 190862E2194073FF0035D017 /* ELCAssetTablePicker.xib */; };
+		190862ED194073FF0035D017 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 190862E3194073FF0035D017 /* Overlay.png */; };
+		190862EE194073FF0035D017 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190862E4194073FF0035D017 /* Overlay@2x.png */; };
 		19265D4919093D540006F5D2 /* SMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D4819093D540006F5D2 /* SMAnnotation.m */; };
 		19265D4F190988430006F5D2 /* SMPhotosCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D4E190988430006F5D2 /* SMPhotosCVC.m */; };
 		19265D52190AA95E0006F5D2 /* SMPhotosCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D51190AA95E0006F5D2 /* SMPhotosCVCell.m */; };
 		192FAA821918110C00800756 /* SMPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192FAA811918110C00800756 /* SMPageViewController.m */; };
+		19561A02191A7CB0002CAA23 /* SMTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19561A01191A7CB0002CAA23 /* SMTextViewController.m */; };
+		19561A05191CEB8A002CAA23 /* SMAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19561A04191CEB8A002CAA23 /* SMAnnotationView.m */; };
+		196BBFF3192CD6BC00A49AB5 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 196BBFF2192CD6BC00A49AB5 /* FacebookSDK.framework */; };
+		196BBFF91930BCCF00A49AB5 /* SMFacebookPhotoSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 196BBFF81930BCCF00A49AB5 /* SMFacebookPhotoSender.m */; };
 		199F794C190E438600DF1F6C /* SMPageVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 199F794B190E438600DF1F6C /* SMPageVCDataSource.m */; };
 		199F7950190E499500DF1F6C /* SMPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 199F794E190E499500DF1F6C /* SMPhotoViewController.m */; };
 		199F7954190E4B3F00DF1F6C /* SMPhotoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 199F7953190E4B3F00DF1F6C /* SMPhotoScrollView.m */; };
@@ -55,6 +69,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		190862D3194073FF0035D017 /* ELCAlbumPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAlbumPickerController.h; sourceTree = "<group>"; };
+		190862D4194073FF0035D017 /* ELCAlbumPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAlbumPickerController.m; sourceTree = "<group>"; };
+		190862D5194073FF0035D017 /* ELCAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAsset.h; sourceTree = "<group>"; };
+		190862D6194073FF0035D017 /* ELCAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAsset.m; sourceTree = "<group>"; };
+		190862D7194073FF0035D017 /* ELCAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetCell.h; sourceTree = "<group>"; };
+		190862D8194073FF0035D017 /* ELCAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAssetCell.m; sourceTree = "<group>"; };
+		190862D9194073FF0035D017 /* ELCAssetPickerFilterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetPickerFilterDelegate.h; sourceTree = "<group>"; };
+		190862DA194073FF0035D017 /* ELCAssetSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetSelectionDelegate.h; sourceTree = "<group>"; };
+		190862DB194073FF0035D017 /* ELCAssetTablePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetTablePicker.h; sourceTree = "<group>"; };
+		190862DC194073FF0035D017 /* ELCAssetTablePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAssetTablePicker.m; sourceTree = "<group>"; };
+		190862DD194073FF0035D017 /* ELCImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCImagePickerController.h; sourceTree = "<group>"; };
+		190862DE194073FF0035D017 /* ELCImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCImagePickerController.m; sourceTree = "<group>"; };
+		190862E0194073FF0035D017 /* ELCAlbumPickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAlbumPickerController.xib; sourceTree = "<group>"; };
+		190862E1194073FF0035D017 /* ELCAssetPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetPicker.xib; sourceTree = "<group>"; };
+		190862E2194073FF0035D017 /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
+		190862E3194073FF0035D017 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
+		190862E4194073FF0035D017 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
 		19265D4719093D540006F5D2 /* SMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMAnnotation.h; sourceTree = "<group>"; };
 		19265D4819093D540006F5D2 /* SMAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMAnnotation.m; sourceTree = "<group>"; };
 		19265D4D190988430006F5D2 /* SMPhotosCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotosCVC.h; sourceTree = "<group>"; };
@@ -63,6 +94,13 @@
 		19265D51190AA95E0006F5D2 /* SMPhotosCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotosCVCell.m; sourceTree = "<group>"; };
 		192FAA801918110C00800756 /* SMPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageViewController.h; sourceTree = "<group>"; };
 		192FAA811918110C00800756 /* SMPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageViewController.m; sourceTree = "<group>"; };
+		19561A00191A7CB0002CAA23 /* SMTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTextViewController.h; sourceTree = "<group>"; };
+		19561A01191A7CB0002CAA23 /* SMTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTextViewController.m; sourceTree = "<group>"; };
+		19561A03191CEB8A002CAA23 /* SMAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMAnnotationView.h; sourceTree = "<group>"; };
+		19561A04191CEB8A002CAA23 /* SMAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMAnnotationView.m; sourceTree = "<group>"; };
+		196BBFF2192CD6BC00A49AB5 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		196BBFF71930BCCE00A49AB5 /* SMFacebookPhotoSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMFacebookPhotoSender.h; sourceTree = "<group>"; };
+		196BBFF81930BCCF00A49AB5 /* SMFacebookPhotoSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMFacebookPhotoSender.m; sourceTree = "<group>"; };
 		199F794A190E438600DF1F6C /* SMPageVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageVCDataSource.h; sourceTree = "<group>"; };
 		199F794B190E438600DF1F6C /* SMPageVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageVCDataSource.m; sourceTree = "<group>"; };
 		199F794D190E499500DF1F6C /* SMPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoViewController.h; sourceTree = "<group>"; };
@@ -124,6 +162,7 @@
 				19BC858418F6B5CA00D9AA91 /* CoreData.framework in Frameworks */,
 				19BC858218F6B5CA00D9AA91 /* UIKit.framework in Frameworks */,
 				19BC857E18F6B5CA00D9AA91 /* Foundation.framework in Frameworks */,
+				196BBFF3192CD6BC00A49AB5 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,9 +180,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		190862D2194073FF0035D017 /* ELCImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				190862D3194073FF0035D017 /* ELCAlbumPickerController.h */,
+				190862D4194073FF0035D017 /* ELCAlbumPickerController.m */,
+				190862D5194073FF0035D017 /* ELCAsset.h */,
+				190862D6194073FF0035D017 /* ELCAsset.m */,
+				190862D7194073FF0035D017 /* ELCAssetCell.h */,
+				190862D8194073FF0035D017 /* ELCAssetCell.m */,
+				190862D9194073FF0035D017 /* ELCAssetPickerFilterDelegate.h */,
+				190862DA194073FF0035D017 /* ELCAssetSelectionDelegate.h */,
+				190862DB194073FF0035D017 /* ELCAssetTablePicker.h */,
+				190862DC194073FF0035D017 /* ELCAssetTablePicker.m */,
+				190862DD194073FF0035D017 /* ELCImagePickerController.h */,
+				190862DE194073FF0035D017 /* ELCImagePickerController.m */,
+				190862DF194073FF0035D017 /* Resources */,
+			);
+			path = ELCImagePicker;
+			sourceTree = "<group>";
+		};
+		190862DF194073FF0035D017 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				190862E0194073FF0035D017 /* ELCAlbumPickerController.xib */,
+				190862E1194073FF0035D017 /* ELCAssetPicker.xib */,
+				190862E2194073FF0035D017 /* ELCAssetTablePicker.xib */,
+				190862E3194073FF0035D017 /* Overlay.png */,
+				190862E4194073FF0035D017 /* Overlay@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		192FAA7E1918107700800756 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				19561A03191CEB8A002CAA23 /* SMAnnotationView.h */,
+				19561A04191CEB8A002CAA23 /* SMAnnotationView.m */,
 				19265D4719093D540006F5D2 /* SMAnnotation.h */,
 				19265D4819093D540006F5D2 /* SMAnnotation.m */,
 				19BC858F18F6B5CA00D9AA91 /* SMAppDelegate.m */,
@@ -172,6 +245,10 @@
 				19265D4E190988430006F5D2 /* SMPhotosCVC.m */,
 				192FAA801918110C00800756 /* SMPageViewController.h */,
 				192FAA811918110C00800756 /* SMPageViewController.m */,
+				19561A00191A7CB0002CAA23 /* SMTextViewController.h */,
+				19561A01191A7CB0002CAA23 /* SMTextViewController.m */,
+				196BBFF71930BCCE00A49AB5 /* SMFacebookPhotoSender.h */,
+				196BBFF81930BCCF00A49AB5 /* SMFacebookPhotoSender.m */,
 			);
 			name = Photos;
 			sourceTree = "<group>";
@@ -222,6 +299,7 @@
 		19BC857C18F6B5CA00D9AA91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				196BBFF2192CD6BC00A49AB5 /* FacebookSDK.framework */,
 				19A6B25B18F86C9F00C9D11A /* MobileCoreServices.framework */,
 				19A6B24118F6E72D00C9D11A /* MapKit.framework */,
 				19BC857D18F6B5CA00D9AA91 /* Foundation.framework */,
@@ -236,6 +314,7 @@
 		19BC858518F6B5CA00D9AA91 /* SystemyMobilne */ = {
 			isa = PBXGroup;
 			children = (
+				190862D2194073FF0035D017 /* ELCImagePicker */,
 				192FAA7F1918108500800756 /* Photos */,
 				192FAA7E1918107700800756 /* Map */,
 				19BC859418F6B5CB00D9AA91 /* Images.xcassets */,
@@ -350,9 +429,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				190862EC194073FF0035D017 /* ELCAssetTablePicker.xib in Resources */,
+				190862EA194073FF0035D017 /* ELCAlbumPickerController.xib in Resources */,
+				190862ED194073FF0035D017 /* Overlay.png in Resources */,
 				19A6B24A18F6EB9B00C9D11A /* SMViewController.xib in Resources */,
 				19BC858A18F6B5CA00D9AA91 /* InfoPlist.strings in Resources */,
+				190862EE194073FF0035D017 /* Overlay@2x.png in Resources */,
 				19BC859518F6B5CB00D9AA91 /* Images.xcassets in Resources */,
+				190862EB194073FF0035D017 /* ELCAssetPicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,8 +457,11 @@
 			files = (
 				19A0672318FECC8400781DEA /* SMPhotoAdder.m in Sources */,
 				199F7950190E499500DF1F6C /* SMPhotoViewController.m in Sources */,
+				19561A02191A7CB0002CAA23 /* SMTextViewController.m in Sources */,
+				190862E6194073FF0035D017 /* ELCAsset.m in Sources */,
 				19265D52190AA95E0006F5D2 /* SMPhotosCVCell.m in Sources */,
 				199F794C190E438600DF1F6C /* SMPageVCDataSource.m in Sources */,
+				19561A05191CEB8A002CAA23 /* SMAnnotationView.m in Sources */,
 				19A6B25718F8241C00C9D11A /* SMPhoto+methods.m in Sources */,
 				192FAA821918110C00800756 /* SMPageViewController.m in Sources */,
 				19265D4F190988430006F5D2 /* SMPhotosCVC.m in Sources */,
@@ -384,12 +471,17 @@
 				19BC859318F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld in Sources */,
 				19265D4919093D540006F5D2 /* SMAnnotation.m in Sources */,
 				19BC859018F6B5CA00D9AA91 /* SMAppDelegate.m in Sources */,
+				196BBFF91930BCCF00A49AB5 /* SMFacebookPhotoSender.m in Sources */,
 				19A0672618FED08100781DEA /* SMURLTransformer.m in Sources */,
 				19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */,
 				19CD551618FF01C3002BD846 /* SMLocationTransformer.m in Sources */,
 				19A6B25A18F8279E00C9D11A /* SMLocation+methods.m in Sources */,
+				190862E7194073FF0035D017 /* ELCAssetCell.m in Sources */,
+				190862E8194073FF0035D017 /* ELCAssetTablePicker.m in Sources */,
+				190862E5194073FF0035D017 /* ELCAlbumPickerController.m in Sources */,
 				199F7954190E4B3F00DF1F6C /* SMPhotoScrollView.m in Sources */,
 				19A6B25418F821DE00C9D11A /* SMPhoto.m in Sources */,
+				190862E9194073FF0035D017 /* ELCImagePickerController.m in Sources */,
 				19BC858C18F6B5CA00D9AA91 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +599,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/z/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SystemyMobilne/SystemyMobilne-Prefix.pch";
 				INFOPLIST_FILE = "SystemyMobilne/SystemyMobilne-Info.plist";
@@ -520,6 +617,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/z/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SystemyMobilne/SystemyMobilne-Prefix.pch";
 				INFOPLIST_FILE = "SystemyMobilne/SystemyMobilne-Info.plist";

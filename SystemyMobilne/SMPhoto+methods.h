@@ -9,7 +9,7 @@
 #import "SMPhoto.h"
 #import "SMLocation.h"
 
-@interface SMPhoto (methods)
+@interface SMPhoto (methods) <NSCoding>
 
 +(instancetype)initPhotoWith:(NSURL*)url Text:(NSString*)text andLocation:(SMLocation*)location inContext:(NSManagedObjectContext*) context;
 @end

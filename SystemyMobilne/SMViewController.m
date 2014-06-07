@@ -20,6 +20,7 @@
 #import "SMAnnotationView.h"
 
 
+
 #define ANNO_VIEW_ID @"SMAnnotationView"
 #define iphoneScaleFactorLatitude 10.0f
 #define iphoneScaleFactorLongitude 10.0f
@@ -31,6 +32,8 @@
 @property (nonatomic) MKZoomScale previousZoomScale;
 @property (strong, nonatomic) NSMutableArray *locationsArray;
 @property (strong, nonatomic) SMAnnotation * lastModifiedAnnotation;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longGestureRecognizer;
+@property (strong, nonatomic) UIBarButtonItem *addPhotoButton;
 
 
 @end
@@ -102,29 +105,6 @@
     }
 }
 
--(void)longPressRecognized:(UILongPressGestureRecognizer*) sender
-{
-    if(sender.state == UIGestureRecognizerStateBegan)
-    {
-        
-        CLLocation *location = nil;
-        CGPoint touchCoordinate = [sender locationInView:self.mapView];
-        
-        
-        CLLocationCoordinate2D locCoord = [self.mapView convertPoint:touchCoordinate
-                                                toCoordinateFromView:self.mapView];
-        location = [[CLLocation alloc] initWithLatitude:locCoord.latitude longitude:locCoord.longitude];
-        
-        if(!self.photoAdder)
-        {
-            self.photoAdder = [[SMPhotoAdder alloc] init];
-            self.photoAdder.delegate = self;
-        }
-        
-        [self.photoAdder addPhotoToLocation:location andSaveInContext:self.managedObjectContext];
-    }
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -138,12 +118,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
-    
-    [self.mapView addGestureRecognizer:recognizer];
+    self.longGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    self.longGestureRecognizer.delegate = self;
+    self.longGestureRecognizer.enabled = NO;
+    [self.mapView addGestureRecognizer:self.longGestureRecognizer];
     [self loadMap];
     self.title = @"Map";
     self.previousZoomScale = [self zoomLevelForMap];
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbar.translucent = YES;
+    
+    self.addPhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(pressedStartAddingPhoto)];
+    UIBarButtonItem *camera = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
+    
+    [self setToolbarItems:@[self.addPhotoButton,camera]];
     
 }
 
@@ -157,7 +145,7 @@
     ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *myAsset)
     {
         ALAssetRepresentation *rep = [myAsset defaultRepresentation];
-        CGImageRef imgRef = [rep fullResolutionImage];
+        CGImageRef imgRef = [rep fullScreenImage];
         if(imgRef)
         {
             UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
@@ -181,17 +169,51 @@
     
 }
 
--(void)annotationLongPress:(UILongPressGestureRecognizer*) sender
+- (void)takePhoto
+{
+    if(self.photoAdder == nil)
+    {
+        self.photoAdder = [[SMPhotoAdder alloc] init];
+        self.photoAdder.delegate = self;
+    }
+#warning     
+    
+    [self.photoAdder takePhotoInLocation:[(SMLocation*)[(SMAnnotation*)self.mapView.annotations.lastObject locationsArray].lastObject location]
+                       andSaveInContext:self.managedObjectContext];
+}
+
+- (void)pressedStartAddingPhoto
+{
+    self.longGestureRecognizer.enabled = !self.longGestureRecognizer.enabled;
+    if(self.addPhotoButton.tintColor == nil)
+    {
+        self.addPhotoButton.tintColor = [UIColor redColor];
+    }
+    else
+    {
+        self.addPhotoButton.tintColor = nil;
+    }
+}
+-(void)longPress:(UILongPressGestureRecognizer*) sender
 {
     if(sender.state == UIGestureRecognizerStateBegan)
     {
         CGPoint touchLocation = [sender locationInView:self.mapView];
         CLLocation *location = nil;
+  
+        CLLocationCoordinate2D locCoord = [self.mapView convertPoint:touchLocation
+                                                toCoordinateFromView:self.mapView];
+        location = [[CLLocation alloc] initWithLatitude:locCoord.latitude longitude:locCoord.longitude];
+        
         for(SMAnnotation *annotation in self.mapView.annotations)
         {
             if(CGRectContainsPoint([self.mapView viewForAnnotation:annotation].frame, touchLocation))
             {
                 location = [(SMLocation*)[annotation.locationsArray firstObject] location];
+                if(annotation.locationsArray.count > 1)
+                {
+                    return; //preventing forbidden operation
+                }
                 break;
             }
             
@@ -204,8 +226,10 @@
         
         [self.photoAdder addPhotoToLocation:location
                            andSaveInContext:self.managedObjectContext];
+        
+        [self pressedStartAddingPhoto];
     }
-
+    
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
@@ -264,18 +288,9 @@
     SMAnnotationView *annotationView = nil;
     if([annotation isKindOfClass:[SMAnnotation class]])
     {
-        UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] init];
-        [recognizer addTarget:self action:@selector(annotationLongPress:)];
-        recognizer.delegate = self;
-        recognizer.allowableMovement = 0.0f;
-        
         SMAnnotation *smAnnotation = (SMAnnotation*) annotation;
         annotationView = [[SMAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNO_VIEW_ID];
-        if(smAnnotation.locationsArray.count == 1)
-        {
-            [annotationView addGestureRecognizer:recognizer];
-        }
-        
+   
         UIButton *accesorButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         [accesorButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
         
@@ -346,11 +361,19 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self navigationController].navigationBarHidden = YES;
+    [self.navigationController.navigationBar setHidden:YES];
+    self.navigationController.toolbarHidden = NO;
     if(self.lastModifiedAnnotation)
     {
         [self checkIfAnnotationIsValid:self.lastModifiedAnnotation];
     }
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController.navigationBar setHidden:NO];
+    self.navigationController.toolbarHidden = YES;
+}
+
 
 @end

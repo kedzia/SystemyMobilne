@@ -11,15 +11,51 @@
 #import "SMPhoto.h"
 #import "SMLocation+methods.h"
 #import "SMPhoto+methods.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <CoreLocation/CoreLocation.h>
+#import "ELCImagePickerController.h"
 
-@interface SMPhotoAdder () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface SMPhotoAdder () <ELCImagePickerControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *moc;
 @property (strong, nonatomic) CLLocation *location;
+@property (strong, nonatomic) UIImagePickerController *imagePicker;
 @end
 @implementation SMPhotoAdder
+
+- (void)takePhotoInLocation:(CLLocation *)location andSaveInContext:(NSManagedObjectContext *)context
+{
+    self.moc = context;
+    self.location = location;
+    NSArray* arr = [UIImagePickerController availableMediaTypesForSourceType:
+                    UIImagePickerControllerSourceTypeCamera];
+    if ([arr indexOfObject:(NSString*)kUTTypeImage] == NSNotFound) {
+        NSLog(@"no stills");
+        return; }
+    if([self isCameraAvailable])
+    {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        self.imagePicker = imagePicker;
+        imagePicker.showsCameraControls = NO;
+        imagePicker.toolbarHidden = NO;
+        imagePicker.mediaTypes = @[(NSString*)kUTTypeImage];
+        self.imagePicker = imagePicker;
+        
+        [self.delegate presentViewController:self.imagePicker animated:YES completion:nil];
+    }
+}
+
+- (void) navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    UIBarButtonItem *takePhoto = [[UIBarButtonItem alloc] initWithTitle:@"Photo" style:UIBarButtonItemStylePlain target:self.imagePicker action:@selector(takePicture)];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    
+    [navigationController.topViewController setToolbarItems:@[cancel,takePhoto,done]];
+}
 
 -(void)addPhotoToLocation:(CLLocation *)location andSaveInContext:(NSManagedObjectContext *)context
 {
@@ -27,15 +63,13 @@
     self.location = location;
     if([self isPhotoLibraryAvailable])
     {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        ELCImagePickerController *imagePicker = [[ELCImagePickerController alloc] initImagePicker];
+        imagePicker.maximumImagesCount = 400; //Set the maximum number of images to select, defaults to 4
+        imagePicker.returnsOriginalImage = NO; //Only return the fullScreenImage, not the fullResolutionImage
+        imagePicker.imagePickerDelegate = self;
         
-        NSMutableArray *photos = [[NSMutableArray alloc] init];
-        [photos addObject:(__bridge NSString *)kUTTypeImage];
-        
-        imagePickerController.mediaTypes = photos;
-        imagePickerController.delegate = self;
-        
-        [self.delegate presentViewController:imagePickerController animated:YES completion:nil];
+        //Present modally
+        [self.delegate presentViewController:imagePicker animated:YES completion:nil];
     }
 }
 
@@ -58,9 +92,8 @@
     return results ? [results firstObject] : nil;
 }
 
--(void)savePhotoWithURL:(NSURL*) url Location:(CLLocation*)location inContext:(NSManagedObjectContext*)context
+-(void)savePhotoWithURLs:(NSArray*) urlArray Location:(CLLocation*)location inContext:(NSManagedObjectContext*)context
 {
-    
     SMLocation *existingLocation = [self checkIfSMLocationExists:location];
     if(existingLocation == nil)
     {
@@ -72,35 +105,33 @@
            {
                [context performBlock:^{
                    CLPlacemark *placemark = [placemarks firstObject];
-                   
-                   NSLog(@"Location: %f, %f", location.coordinate.longitude, location.coordinate.latitude);
-                   NSLog(@"Placemark: %f, %f", placemark.location.coordinate.longitude, placemark.location.coordinate.latitude);
-                   
-                   SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark Location:location andContext:context];
-                   [SMPhoto initPhotoWith:url
-                                     Text:@" " andLocation:locationEntity
-                                inContext:context];
-                   
+                   SMLocation *locationEntity = [SMLocation initLocationWithPlacemark:placemark
+                                                                             Location:location
+                                                                           andContext:context];
+                   for (NSURL *url in urlArray)
+                   {
+                       [SMPhoto initPhotoWith:url
+                                         Text:@" " andLocation:locationEntity
+                                    inContext:context];
+                   }
                    [self.delegate finishedAddingPhotosforLocation:locationEntity];
                }];
-               
            }
            else
            {
                NSLog(@"Error geocode %@", [error localizedDescription]);
            }
-           
        }];
     }
     else
     {
-        [SMPhoto initPhotoWith:url
-                          Text:@" " andLocation:existingLocation
-                     inContext:context];
+        for (NSURL *url in urlArray)
+        {
+            [SMPhoto initPhotoWith:url
+                              Text:@" " andLocation:existingLocation
+                         inContext:context];
+        }
     }
-    
-    
-    
 }
 
 -(BOOL)isPhotoLibraryAvailable
@@ -108,23 +139,58 @@
     return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
 }
 
-#pragma mark UIImagePickerControllerDelegate protocol
-
--(void)imagePickerController:(UIImagePickerController *)picker
-       didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (BOOL)isCameraAvailable
 {
-    
-    NSURL *url = [info valueForKeyPath:UIImagePickerControllerReferenceURL];
-    [self savePhotoWithURL:url Location:self.location inContext:self.moc];
-   
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    return [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront];
 }
 
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+#pragma mark UIImagePickerControllerDelegate protocol
+
+
+- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
+{
+    NSMutableArray *urls = [[NSMutableArray alloc] init];
+    for (NSDictionary *infoDictionary in info)
+    {
+        NSURL *url = [infoDictionary valueForKeyPath:UIImagePickerControllerReferenceURL];
+        [urls addObject:url];
+        
+    }
+    [self savePhotoWithURLs:urls Location:self.location inContext:self.moc];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)elcImagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
     
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self cancel];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKeyPath:UIImagePickerControllerOriginalImage];
+    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+    [library writeImageToSavedPhotosAlbum:image.CGImage orientation:ALAssetOrientationUp completionBlock:^(NSURL *assetURL, NSError *error) {
+        if(!error)
+        {
+           // [self savePhotoWithURLs:@[assetURL] Location:self.location inContext:self.moc];
+        }
+        else
+        {
+            NSLog(@"saving photo error: %@", error.localizedDescription);
+        }
+    }];
+}
+
+- (void)cancel
+{
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 

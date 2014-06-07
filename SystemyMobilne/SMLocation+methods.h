@@ -8,10 +8,10 @@
 
 #import "SMLocation.h"
 
-@interface SMLocation (methods)
+@interface SMLocation (methods) <NSCoding>
 
 +(instancetype)initLocationWithPlacemark:(CLPlacemark*)placemark Location:(CLLocation*)location Name:(NSString*) name andContext:(NSManagedObjectContext*)context;
 
++ (instancetype)initLocationWithPlacemark:(CLPlacemark*)placemark Location:(CLLocation*)location andContext:(NSManagedObjectContext*)context;
 
-+(instancetype)initLocationWithPlacemark:(CLPlacemark*)placemark Location:(CLLocation*)location andContext:(NSManagedObjectContext*)context;
 @end

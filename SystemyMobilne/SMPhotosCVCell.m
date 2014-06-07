@@ -30,7 +30,7 @@
     ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *myAsset)
     {
         ALAssetRepresentation *rep = [myAsset defaultRepresentation];
-        CGImageRef imgRef = [rep fullResolutionImage];
+        CGImageRef imgRef = [rep fullScreenImage];
         if(imgRef)
         {
             UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
