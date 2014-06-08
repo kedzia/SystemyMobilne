@@ -8,6 +8,7 @@
 
 #import "SMPhotosCVCell.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "SMAppDelegate.h"
 
 @implementation SMPhotosCVCell
 
@@ -22,6 +23,7 @@
 
 -(void)viewWithALAssetURL:(NSURL *)paramURL
 {
+    [[self.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
   [self retrieveImageFromAssestsWithURL:paramURL forView:self.contentView];
 }
 
@@ -29,25 +31,24 @@
 {
     ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *myAsset)
     {
-        ALAssetRepresentation *rep = [myAsset defaultRepresentation];
-        CGImageRef imgRef = [rep fullScreenImage];
-        if(imgRef)
-        {
-            UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
-            
-            UIImageView *imv = [[UIImageView alloc] initWithImage:largeImage];
-            imv.autoresizingMask = UIViewContentModeScaleAspectFit;
-            imv.frame = CGRectMake(0, 0, 120, 160);
-            paramView.frame = imv.frame;
-            [paramView addSubview:imv];
-        }
+        CGImageRef imgRef = [myAsset thumbnail];
+        UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
+        
+            if(imgRef)
+            {
+                UIImageView *imv = [[UIImageView alloc] initWithImage:largeImage];
+                //imv.autoresizingMask = UIViewContentModeScaleAspectFit;
+                imv.frame = CGRectMake(0, 0, 140, 140);
+                paramView.frame = imv.frame;
+                [paramView addSubview:imv];
+            }
     };
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
     {
         NSLog(@"booya, cant get image - %@",[myerror localizedDescription]);
     };
     
-    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    ALAssetsLibrary* assetslibrary = [SMAppDelegate sharedLibrary];
     [assetslibrary assetForURL:paramURL
                    resultBlock:resultBlock
                   failureBlock:failureblock];

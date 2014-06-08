@@ -8,6 +8,7 @@
 
 #import "SMPhotoScrollView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "SMAppDelegate.h"
 
 @interface SMPhotoScrollView () <UIScrollViewDelegate>
 {
@@ -132,7 +133,7 @@
         NSLog(@"booya, cant get image - %@",[myerror localizedDescription]);
     };
     
-    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    ALAssetsLibrary* assetslibrary = [SMAppDelegate sharedLibrary];
     [assetslibrary assetForURL:paramURL
                    resultBlock:resultBlock
                   failureBlock:failureblock];

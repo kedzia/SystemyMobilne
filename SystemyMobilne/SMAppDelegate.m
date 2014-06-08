@@ -119,7 +119,16 @@
     return wasHandled;
 }
 
-
++ (ALAssetsLibrary*)sharedLibrary
+{
+    static dispatch_once_t once;
+    static ALAssetsLibrary *library;
+    dispatch_once(&once, ^{
+        library = [[ALAssetsLibrary alloc] init];
+    });
+    
+    return library;
+}
 #pragma mark - Core Data stack
 -(NSURL*)storeURL
 {

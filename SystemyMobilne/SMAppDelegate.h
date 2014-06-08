@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SMPersistentStore.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface SMAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -15,6 +16,6 @@
 
 
 - (NSURL *)applicationDocumentsDirectory;
--(NSManagedObjectContext*)sharedManagedObjectContext;
-
+- (NSManagedObjectContext*)sharedManagedObjectContext;
++ (ALAssetsLibrary*)sharedLibrary;
 @end
