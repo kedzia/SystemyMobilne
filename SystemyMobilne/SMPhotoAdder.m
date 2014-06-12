@@ -15,6 +15,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <CoreLocation/CoreLocation.h>
 #import "ELCImagePickerController.h"
+#import "SMAppDelegate.h"
 
 @interface SMPhotoAdder () <ELCImagePickerControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -53,8 +54,9 @@
     UIBarButtonItem *takePhoto = [[UIBarButtonItem alloc] initWithTitle:@"Photo" style:UIBarButtonItemStylePlain target:self.imagePicker action:@selector(takePicture)];
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    [navigationController.topViewController setToolbarItems:@[cancel,takePhoto,done]];
+    [navigationController.topViewController setToolbarItems:@[cancel,space,takePhoto, space,done]];
 }
 
 -(void)addPhotoToLocation:(CLLocation *)location andSaveInContext:(NSManagedObjectContext *)context
@@ -150,14 +152,16 @@
 
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
-    NSMutableArray *urls = [[NSMutableArray alloc] init];
-    for (NSDictionary *infoDictionary in info)
+    if(info.count > 0)
     {
-        NSURL *url = [infoDictionary valueForKeyPath:UIImagePickerControllerReferenceURL];
-        [urls addObject:url];
-        
-    }
+        NSMutableArray *urls = [[NSMutableArray alloc] init];
+        for (NSDictionary *infoDictionary in info)
+        {
+            NSURL *url = [infoDictionary valueForKeyPath:UIImagePickerControllerReferenceURL];
+            [urls addObject:url];
+        }
     [self savePhotoWithURLs:urls Location:self.location inContext:self.moc];
+    }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -175,11 +179,11 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKeyPath:UIImagePickerControllerOriginalImage];
-    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
-    [library writeImageToSavedPhotosAlbum:image.CGImage orientation:ALAssetOrientationUp completionBlock:^(NSURL *assetURL, NSError *error) {
+    ALAssetsLibrary* library = [SMAppDelegate sharedLibrary];
+    [library writeImageToSavedPhotosAlbum:image.CGImage orientation:ALAssetOrientationRight completionBlock:^(NSURL *assetURL, NSError *error) {
         if(!error)
         {
-           // [self savePhotoWithURLs:@[assetURL] Location:self.location inContext:self.moc];
+            [self savePhotoWithURLs:@[assetURL] Location:self.location inContext:self.moc];
         }
         else
         {

@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "SMFacebookPhoto.h"
+#import "SMSheetVC.h"
 
-@interface SMFacebookPhotoSender : NSObject
+@interface SMFacebookPhotoSender : NSObject @property (weak, nonatomic) UIViewController *delegate;
 
 -(void)LogInAndUploadPhotos:(NSArray*)photosArray toAlbum:(NSString*)albumName;
 @end

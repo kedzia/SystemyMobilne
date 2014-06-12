@@ -7,18 +7,22 @@
 //
 
 #import "SMFacebookPhotoSender.h"
-@interface SMFacebookPhotoSender()
-
+#import "SMSheetVC.h"
+@interface SMFacebookPhotoSender() <SMSheetVCProtocol>
+@property (strong, nonatomic) NSArray *photosArray;
+@property (strong, nonatomic) NSString *albumName;
+@property (strong, nonatomic) SMSheetVC *sheet;
 @end
 @implementation SMFacebookPhotoSender
 
--(void) createAlbum:(NSString*)albumName andUploadPhotos:(NSArray*) photosArray
+-(void) createAlbum:(NSString*)albumName andUploadPhotos:(NSArray*) photosArray privacy:(NSString*) paramPrivacy
 {
 
     /// retrieve create album, retrieve informations about it and add photo with text
-    
+     NSString *privacy = [NSString stringWithFormat:@"{'value' :'%@'}",paramPrivacy];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             albumName,@"name",
+                            privacy, @"privacy",
                             nil
                             ];
     // make the API call
@@ -33,7 +37,7 @@
                               // handle the result
                               if(error == nil)
                               {
-                                  [self postPhotosToFacebook:photosArray withAlbumID:[result objectForKey:@"id"]];
+                                  [self postPhotosToFacebook:photosArray withAlbumID:[result objectForKey:@"id"] privacy:@"EVERYONE"];
                               }
                               else
                               {
@@ -43,13 +47,15 @@
     
 }
 
--(void)checkIfAlbumExists:(NSString*)name andUploadPhotos:(NSArray*) photosArray
+-(void)checkIfAlbumExists:(NSString*)name andUploadPhotos:(NSArray*) photosArray withPrivacy:(NSString *)paramPrivacy;
 {
-    NSDictionary *params = [NSDictionary dictionaryWithObject:name forKey:name];
+    //NSDictionary *params = [NSDictionary dictionaryWithObject:name forKey:name];
     
-    
-    [FBRequestConnection startWithGraphPath:@"/me/albums" parameters:params HTTPMethod:@"GET" completionHandler:^(FBRequestConnection *connection, id result, NSError *error)
+
+    [FBRequestConnection startWithGraphPath:@"/me/albums?fields=name" completionHandler:^(FBRequestConnection *connection, id result, NSError *error)
      {
+         if(!error)
+         {
          BOOL found = NO;
          NSArray *data = [result valueForKey:@"data"];
          for(NSDictionary *album in data)
@@ -57,29 +63,40 @@
              if([name isEqualToString:[album valueForKey:@"name"]])
              {
                  NSLog(@"found match");
-                 [self postPhotosToFacebook:photosArray withAlbumID:[album valueForKeyPath:@"id"]];
+                 [self postPhotosToFacebook:photosArray withAlbumID:[album valueForKeyPath:@"id"] privacy:paramPrivacy];
                  found = YES;
                  break;
              }
          }
          if(found == NO)
          {
-             [self createAlbum:name andUploadPhotos:photosArray];
+             [self createAlbum:name andUploadPhotos:photosArray privacy:paramPrivacy];
          }
-         
+         }
+         else
+         {
+             NSLog(@"error getting albums data%@",error.localizedDescription);
+             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
+         }
      }];
 }
 
-- (void)postPhotosToFacebook:(NSArray *)photos withAlbumID:(NSString *)albumID {
+- (void)postPhotosToFacebook:(NSArray *)photos withAlbumID:(NSString *)albumID privacy:(NSString*)privacyVal  {
     
-    UIImage *image = [photos lastObject];
+    SMFacebookPhoto *fbPhoto = [photos lastObject];
     
+    UIImage *image = fbPhoto.image;
+    NSString *description = fbPhoto.description;
     NSString *graphPath = [NSString stringWithFormat:@"%@/photos",albumID];
     
     NSLog(@"graphPath = %@",graphPath);
-    
+
+    NSString *privacy = [NSString stringWithFormat:@"{'value' :'%@'}",privacyVal];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 image,@"picture",
+                                description,@"description",
+                                privacy,@"privacy",
                                 nil];
     
     FBRequest *request = [FBRequest requestWithGraphPath:graphPath
@@ -96,10 +113,14 @@
                  NSLog(@"Photo uploaded successfuly! %@",result);
                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Photo Uploaded successfuly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                  [alertView show];
+                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
                  
              } else {
                  
                  NSLog(@"Photo uploaded failed :( %@",error.userInfo);
+                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
              }
              
          }];
@@ -107,9 +128,21 @@
     [connection start];
     
 }
-
-
 -(void)LogInAndUploadPhotos:(NSArray*)photosArray toAlbum:(NSString*)albumName
+{
+    NSAssert(self.delegate, @"delegate not set");
+    self.photosArray = photosArray;
+    self.albumName = albumName;
+    if(!self.sheet)
+    {
+        self.sheet = [[SMSheetVC alloc] init];
+        self.sheet.delegate = self;
+    }
+    [self.delegate presentViewController:self.sheet animated:YES completion:nil];
+}
+
+
+-(void)LogInAndUploadPhotos:(NSArray*)photosArray toAlbum:(NSString*)albumName withPrivacy:(NSString*)paramPrivacy
 {
     if (FBSession.activeSession.state == FBSessionStateOpen
         || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
@@ -128,7 +161,7 @@
         // Set the active session
         [FBSession setActiveSession:session];
         // Open the session
-        [session openWithBehavior:FBSessionLoginBehaviorForcingWebView
+        [session openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView
                 completionHandler:^(FBSession *session,
                                     FBSessionState status,
                                     NSError *error) {
@@ -180,7 +213,7 @@
                                    // Permission granted
                                    NSLog(@"new permissions %@", [FBSession.activeSession permissions]);
                                    // We can request the user information
-                                   [self checkIfAlbumExists:albumName andUploadPhotos:photosArray];
+                                   [self checkIfAlbumExists:albumName andUploadPhotos:photosArray withPrivacy:paramPrivacy];
                                }
                                else
                                {
@@ -192,14 +225,22 @@
                       {
                           // Permissions are present
                           // We can request the user information
-                          [self checkIfAlbumExists:albumName andUploadPhotos:photosArray];
+                          [self checkIfAlbumExists:albumName andUploadPhotos:photosArray withPrivacy:paramPrivacy];
                       }
                   }
                   
               }];
 }
 
+#pragma mark SMSheetVC protocol
 
+- (void)choosenPrivacy:(NSString *)paramPrivacy
+{
+    NSAssert(self.delegate, @"delegate not set");
+    [self.sheet dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self LogInAndUploadPhotos:self.photosArray toAlbum:self.albumName withPrivacy:paramPrivacy];
+}
 
 
 

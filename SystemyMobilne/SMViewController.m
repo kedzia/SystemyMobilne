@@ -18,7 +18,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "SMPhotosCVC.h"
 #import "SMAnnotationView.h"
-
+#import "SMLocalizer.h"
 
 
 #define ANNO_VIEW_ID @"SMAnnotationView"
@@ -34,6 +34,7 @@
 @property (strong, nonatomic) SMAnnotation * lastModifiedAnnotation;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longGestureRecognizer;
 @property (strong, nonatomic) UIBarButtonItem *addPhotoButton;
+@property (strong, nonatomic) SMLocalizer *myLocalizer;
 
 
 @end
@@ -118,6 +119,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.myLocalizer = [[SMLocalizer alloc] init];
     self.longGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     self.longGestureRecognizer.delegate = self;
     self.longGestureRecognizer.enabled = NO;
@@ -171,15 +173,17 @@
 
 - (void)takePhoto
 {
-    if(self.photoAdder == nil)
+    CLLocation *location = [self.myLocalizer getCurrentLocation];
+    if(location)
     {
-        self.photoAdder = [[SMPhotoAdder alloc] init];
-        self.photoAdder.delegate = self;
+        if(self.photoAdder == nil)
+        {
+            self.photoAdder = [[SMPhotoAdder alloc] init];
+            self.photoAdder.delegate = self;
+        }
+        [self.photoAdder takePhotoInLocation:location
+                           andSaveInContext:self.managedObjectContext];
     }
-#warning     
-    
-    [self.photoAdder takePhotoInLocation:[(SMLocation*)[(SMAnnotation*)self.mapView.annotations.lastObject locationsArray].lastObject location]
-                       andSaveInContext:self.managedObjectContext];
 }
 
 - (void)pressedStartAddingPhoto
@@ -268,6 +272,15 @@
 }
 
 #pragma mark mapView delegate
+- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
 
 - (MKZoomScale)zoomLevelForMap
 {
@@ -349,6 +362,7 @@
         if(location.photos.count == 0)
         {
             [self.locationsArray removeObject:location];
+            [location.managedObjectContext deleteObject:location];
             emptyLocationCounter ++;
         }
     }
@@ -363,6 +377,7 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     self.navigationController.toolbarHidden = NO;
+    [self.myLocalizer startLocalizing];
     if(self.lastModifiedAnnotation)
     {
         [self checkIfAnnotationIsValid:self.lastModifiedAnnotation];
@@ -373,6 +388,8 @@
 {
     [self.navigationController.navigationBar setHidden:NO];
     self.navigationController.toolbarHidden = YES;
+     [self.myLocalizer stopLocalizing];
+     [self.myLocalizer stopLocalizing];
 }
 
 

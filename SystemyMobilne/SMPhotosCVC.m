@@ -73,7 +73,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
-    
+    [self.navigationController setToolbarHidden:YES];
 }
 
 #pragma mark state restoration

@@ -8,9 +8,11 @@
 
 #import "SMPageViewController.h"
 #import "SMFacebookPhotoSender.h"
+#import "SMFacebookPhoto.h"
 
 @interface SMPageViewController () <UIPageViewControllerDelegate, UIViewControllerRestoration>
 
+@property SMFacebookPhotoSender * sender;
 @end
 
 @implementation SMPageViewController
@@ -88,10 +90,13 @@
 
 - (void)facebookTapped
 {
-    SMFacebookPhotoSender *sender = [[SMFacebookPhotoSender alloc] init];
-    NSArray *photos = [NSArray arrayWithObject:[self.photoDelegate getImage]];
+    self.sender = [[SMFacebookPhotoSender alloc] init];
+    self.sender.delegate = self;
+    UIImage *image = [self.photoDelegate getImage];
+    NSString *desc = [self.photoDelegate selectedPhoto].descritptionText;
     NSString *albumName = [[[self.photoDelegate selectedPhoto] location] name];
-    [sender LogInAndUploadPhotos:photos toAlbum:albumName];
+    SMFacebookPhoto *fbPhoto = [[SMFacebookPhoto alloc] initWithImage:image andDescription:desc];
+    [self.sender LogInAndUploadPhotos:@[fbPhoto] toAlbum:albumName];
     
 }
 

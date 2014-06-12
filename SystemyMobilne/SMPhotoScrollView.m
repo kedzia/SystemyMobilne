@@ -119,18 +119,33 @@
 {
     ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *myAsset)
     {
-        ALAssetRepresentation *rep = [myAsset defaultRepresentation];
-        CGImageRef imgRef = [rep fullScreenImage];
-        if(imgRef)
+        if(myAsset)
         {
-            UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
-            
-            [self configureForImage:largeImage];
+            dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            dispatch_async(concurrentQueue, ^{
+                ALAssetRepresentation *rep = [myAsset defaultRepresentation];
+                CGImageRef imgRef = [rep fullScreenImage];
+                if(imgRef)
+                {
+                    UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
+                    
+                    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+                    dispatch_async(mainQueue, ^{
+                        [self configureForImage:largeImage];
+                
+                    });
+                }
+            });
         }
+        else
+        {
+            NSLog(@"asset doesn't exist!");
+        }
+       
     };
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
     {
-        NSLog(@"booya, cant get image - %@",[myerror localizedDescription]);
+        NSLog(@"Can't get image: %@",[myerror localizedDescription]);
     };
     
     ALAssetsLibrary* assetslibrary = [SMAppDelegate sharedLibrary];
