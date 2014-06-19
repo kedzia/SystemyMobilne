@@ -21,13 +21,13 @@
     return self;
 }
 
--(void)viewWithALAssetURL:(NSURL *)paramURL
+-(void)viewWithALAssetPhoto:(SMPhoto *)photo
 {
     [[self.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-  [self retrieveImageFromAssestsWithURL:paramURL forView:self.contentView];
+    [self retrieveImageFromAssestsWithPhoto:(SMPhoto*) photo forView:self.contentView];
 }
 
--(void)retrieveImageFromAssestsWithURL:(NSURL*)paramURL forView:(UIView*) paramView;
+-(void)retrieveImageFromAssestsWithPhoto:(SMPhoto*)photo forView:(UIView*) paramView;
 {
     ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *myAsset)
     {
@@ -42,6 +42,10 @@
                 paramView.frame = imv.frame;
                 [paramView addSubview:imv];
             }
+            else
+            {
+                [photo.managedObjectContext deleteObject:photo];
+            }
     };
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
     {
@@ -49,7 +53,7 @@
     };
     
     ALAssetsLibrary* assetslibrary = [SMAppDelegate sharedLibrary];
-    [assetslibrary assetForURL:paramURL
+    [assetslibrary assetForURL:photo.photoURL
                    resultBlock:resultBlock
                   failureBlock:failureblock];
     

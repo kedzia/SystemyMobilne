@@ -115,7 +115,7 @@
     if(cell)
     {
         SMPhoto *photo = [self.fetchedResultController objectAtIndexPath:indexPath];
-        [cell viewWithALAssetURL:photo.photoURL];
+        [cell viewWithALAssetPhoto:photo];
     }
     return cell;
 }

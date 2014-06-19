@@ -21,7 +21,7 @@
 
 - (void) stopLocalizing
 {
-    [self.myLocationManager stopUpdatingLocation];
+    [self.myLocationManager stopMonitoringSignificantLocationChanges];
 }
 
 -(instancetype)init
@@ -30,10 +30,11 @@
     if(self)
     {
         if ([CLLocationManager locationServicesEnabled])
-        { self.myLocationManager = [[CLLocationManager alloc] init];
+        {
+            self.myLocationManager = [[CLLocationManager alloc] init];
             self.myLocationManager.delegate = self;
-            
             [self.myLocationManager startMonitoringSignificantLocationChanges];
+            [[NSNotificationCenter defaultCenter] addObserver:self.myLocationManager selector:@selector(stopMonitoringSignificantLocationChanges) name:UIApplicationDidEnterBackgroundNotification object:nil];
         }
         else
         {

@@ -21,6 +21,9 @@
 		19265D4F190988430006F5D2 /* SMPhotosCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D4E190988430006F5D2 /* SMPhotosCVC.m */; };
 		19265D52190AA95E0006F5D2 /* SMPhotosCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19265D51190AA95E0006F5D2 /* SMPhotosCVCell.m */; };
 		192FAA821918110C00800756 /* SMPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192FAA811918110C00800756 /* SMPageViewController.m */; };
+		19421AFF1948C0DF004B5A57 /* SMSheetVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 19421AFE1948C0DF004B5A57 /* SMSheetVC.xib */; };
+		19421B021948F19F004B5A57 /* SMLocalizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19421B011948F19F004B5A57 /* SMLocalizer.m */; };
+		19421B051949F4A5004B5A57 /* UIViewController+UITexFieldC0ntroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 19421B041949F4A5004B5A57 /* UIViewController+UITexFieldC0ntroller.m */; };
 		19561A02191A7CB0002CAA23 /* SMTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19561A01191A7CB0002CAA23 /* SMTextViewController.m */; };
 		19561A05191CEB8A002CAA23 /* SMAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19561A04191CEB8A002CAA23 /* SMAnnotationView.m */; };
 		196BBFF3192CD6BC00A49AB5 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 196BBFF2192CD6BC00A49AB5 /* FacebookSDK.framework */; };
@@ -56,6 +59,8 @@
 		19BC85A918F6B5CB00D9AA91 /* SystemyMobilneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC85A818F6B5CB00D9AA91 /* SystemyMobilneTests.m */; };
 		19BC85B418F6C96D00D9AA91 /* SMPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BC85B318F6C96D00D9AA91 /* SMPersistentStore.m */; };
 		19CD551618FF01C3002BD846 /* SMLocationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CD551518FF01C3002BD846 /* SMLocationTransformer.m */; };
+		19EC31E819489C5A00C73A58 /* SMFacebookPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EC31E719489C5A00C73A58 /* SMFacebookPhoto.m */; };
+		19EC31EC1948A22F00C73A58 /* SMSheetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EC31EA1948A22F00C73A58 /* SMSheetVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +99,11 @@
 		19265D51190AA95E0006F5D2 /* SMPhotosCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotosCVCell.m; sourceTree = "<group>"; };
 		192FAA801918110C00800756 /* SMPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageViewController.h; sourceTree = "<group>"; };
 		192FAA811918110C00800756 /* SMPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageViewController.m; sourceTree = "<group>"; };
+		19421AFE1948C0DF004B5A57 /* SMSheetVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMSheetVC.xib; sourceTree = "<group>"; };
+		19421B001948F19F004B5A57 /* SMLocalizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLocalizer.h; sourceTree = "<group>"; };
+		19421B011948F19F004B5A57 /* SMLocalizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLocalizer.m; sourceTree = "<group>"; };
+		19421B031949F4A5004B5A57 /* UIViewController+UITexFieldC0ntroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UITexFieldC0ntroller.h"; sourceTree = "<group>"; };
+		19421B041949F4A5004B5A57 /* UIViewController+UITexFieldC0ntroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UITexFieldC0ntroller.m"; sourceTree = "<group>"; };
 		19561A00191A7CB0002CAA23 /* SMTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTextViewController.h; sourceTree = "<group>"; };
 		19561A01191A7CB0002CAA23 /* SMTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTextViewController.m; sourceTree = "<group>"; };
 		19561A03191CEB8A002CAA23 /* SMAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMAnnotationView.h; sourceTree = "<group>"; };
@@ -105,7 +115,6 @@
 		199F794B190E438600DF1F6C /* SMPageVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageVCDataSource.m; sourceTree = "<group>"; };
 		199F794D190E499500DF1F6C /* SMPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoViewController.h; sourceTree = "<group>"; };
 		199F794E190E499500DF1F6C /* SMPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoViewController.m; sourceTree = "<group>"; };
-		199F7952190E4B3F00DF1F6C /* SMPhotoScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoScrollView.h; sourceTree = "<group>"; };
 		199F7953190E4B3F00DF1F6C /* SMPhotoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoScrollView.m; sourceTree = "<group>"; };
 		19A0672118FECC8400781DEA /* SMPhotoAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPhotoAdder.h; sourceTree = "<group>"; };
 		19A0672218FECC8400781DEA /* SMPhotoAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPhotoAdder.m; sourceTree = "<group>"; };
@@ -149,6 +158,10 @@
 		19CD551318FF0029002BD846 /* SystemyMobilne 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SystemyMobilne 2.xcdatamodel"; sourceTree = "<group>"; };
 		19CD551418FF01C3002BD846 /* SMLocationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLocationTransformer.h; sourceTree = "<group>"; };
 		19CD551518FF01C3002BD846 /* SMLocationTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLocationTransformer.m; sourceTree = "<group>"; };
+		19EC31E619489C5900C73A58 /* SMFacebookPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMFacebookPhoto.h; sourceTree = "<group>"; };
+		19EC31E719489C5A00C73A58 /* SMFacebookPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMFacebookPhoto.m; sourceTree = "<group>"; };
+		19EC31E91948A22F00C73A58 /* SMSheetVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSheetVC.h; sourceTree = "<group>"; };
+		19EC31EA1948A22F00C73A58 /* SMSheetVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSheetVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +239,8 @@
 				19A6B24618F6EB9B00C9D11A /* SMViewController.h */,
 				19A6B24718F6EB9B00C9D11A /* SMViewController.m */,
 				19A6B24818F6EB9B00C9D11A /* SMViewController.xib */,
+				19421B001948F19F004B5A57 /* SMLocalizer.h */,
+				19421B011948F19F004B5A57 /* SMLocalizer.m */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -233,7 +248,6 @@
 		192FAA7F1918108500800756 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
-				199F7952190E4B3F00DF1F6C /* SMPhotoScrollView.h */,
 				199F7953190E4B3F00DF1F6C /* SMPhotoScrollView.m */,
 				199F794D190E499500DF1F6C /* SMPhotoViewController.h */,
 				199F794E190E499500DF1F6C /* SMPhotoViewController.m */,
@@ -247,11 +261,13 @@
 				192FAA811918110C00800756 /* SMPageViewController.m */,
 				19561A00191A7CB0002CAA23 /* SMTextViewController.h */,
 				19561A01191A7CB0002CAA23 /* SMTextViewController.m */,
-				196BBFF71930BCCE00A49AB5 /* SMFacebookPhotoSender.h */,
-				196BBFF81930BCCF00A49AB5 /* SMFacebookPhotoSender.m */,
+				19421B031949F4A5004B5A57 /* UIViewController+UITexFieldC0ntroller.h */,
+				19421B041949F4A5004B5A57 /* UIViewController+UITexFieldC0ntroller.m */,
+				19EC31EE1948A2C600C73A58 /* Facebook */,
 			);
 			name = Photos;
-			sourceTree = "<group>";
+			path = /Users/z/Developer/SystemyMobilne/SystemyMobilne;
+			sourceTree = "<absolute>";
 		};
 		19A6B24B18F8216A00C9D11A /* CoreData */ = {
 			isa = PBXGroup;
@@ -353,6 +369,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		19EC31EE1948A2C600C73A58 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				196BBFF71930BCCE00A49AB5 /* SMFacebookPhotoSender.h */,
+				196BBFF81930BCCF00A49AB5 /* SMFacebookPhotoSender.m */,
+				19EC31E619489C5900C73A58 /* SMFacebookPhoto.h */,
+				19EC31E719489C5A00C73A58 /* SMFacebookPhoto.m */,
+				19EC31E91948A22F00C73A58 /* SMSheetVC.h */,
+				19EC31EA1948A22F00C73A58 /* SMSheetVC.m */,
+				19421AFE1948C0DF004B5A57 /* SMSheetVC.xib */,
+			);
+			name = Facebook;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -433,6 +463,7 @@
 				190862EA194073FF0035D017 /* ELCAlbumPickerController.xib in Resources */,
 				190862ED194073FF0035D017 /* Overlay.png in Resources */,
 				19A6B24A18F6EB9B00C9D11A /* SMViewController.xib in Resources */,
+				19421AFF1948C0DF004B5A57 /* SMSheetVC.xib in Resources */,
 				19BC858A18F6B5CA00D9AA91 /* InfoPlist.strings in Resources */,
 				190862EE194073FF0035D017 /* Overlay@2x.png in Resources */,
 				19BC859518F6B5CB00D9AA91 /* Images.xcassets in Resources */,
@@ -457,6 +488,7 @@
 			files = (
 				19A0672318FECC8400781DEA /* SMPhotoAdder.m in Sources */,
 				199F7950190E499500DF1F6C /* SMPhotoViewController.m in Sources */,
+				19421B051949F4A5004B5A57 /* UIViewController+UITexFieldC0ntroller.m in Sources */,
 				19561A02191A7CB0002CAA23 /* SMTextViewController.m in Sources */,
 				190862E6194073FF0035D017 /* ELCAsset.m in Sources */,
 				19265D52190AA95E0006F5D2 /* SMPhotosCVCell.m in Sources */,
@@ -468,14 +500,17 @@
 				19A6B24918F6EB9B00C9D11A /* SMViewController.m in Sources */,
 				19A6B25118F821A200C9D11A /* SMLocation.m in Sources */,
 				19BC85B418F6C96D00D9AA91 /* SMPersistentStore.m in Sources */,
+				19EC31E819489C5A00C73A58 /* SMFacebookPhoto.m in Sources */,
 				19BC859318F6B5CA00D9AA91 /* SystemyMobilne.xcdatamodeld in Sources */,
 				19265D4919093D540006F5D2 /* SMAnnotation.m in Sources */,
 				19BC859018F6B5CA00D9AA91 /* SMAppDelegate.m in Sources */,
+				19421B021948F19F004B5A57 /* SMLocalizer.m in Sources */,
 				196BBFF91930BCCF00A49AB5 /* SMFacebookPhotoSender.m in Sources */,
 				19A0672618FED08100781DEA /* SMURLTransformer.m in Sources */,
 				19A6B24018F6E71E00C9D11A /* SMPlacemarkTransformer.m in Sources */,
 				19CD551618FF01C3002BD846 /* SMLocationTransformer.m in Sources */,
 				19A6B25A18F8279E00C9D11A /* SMLocation+methods.m in Sources */,
+				19EC31EC1948A22F00C73A58 /* SMSheetVC.m in Sources */,
 				190862E7194073FF0035D017 /* ELCAssetCell.m in Sources */,
 				190862E8194073FF0035D017 /* ELCAssetTablePicker.m in Sources */,
 				190862E5194073FF0035D017 /* ELCAlbumPickerController.m in Sources */,

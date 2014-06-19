@@ -139,8 +139,14 @@
         }
         else
         {
-            NSLog(@"asset doesn't exist!");
-        }
+            CGPoint point = self.center;
+            float width = 200;
+            float height = 50;
+            CGRect frame = CGRectMake(point.x - width/2,point.y - height/2, width,height);
+            UILabel *label = [[UILabel alloc] initWithFrame:frame];
+            label.text = @"PHOTO NOT FOUND";
+            [self addSubview:label];
+         }
        
     };
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)

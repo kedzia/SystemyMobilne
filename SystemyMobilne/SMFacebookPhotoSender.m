@@ -56,28 +56,28 @@
      {
          if(!error)
          {
-         BOOL found = NO;
-         NSArray *data = [result valueForKey:@"data"];
-         for(NSDictionary *album in data)
-         {
-             if([name isEqualToString:[album valueForKey:@"name"]])
+             BOOL found = NO;
+             NSArray *data = [result valueForKey:@"data"];
+             for(NSDictionary *album in data)
              {
-                 NSLog(@"found match");
-                 [self postPhotosToFacebook:photosArray withAlbumID:[album valueForKeyPath:@"id"] privacy:paramPrivacy];
-                 found = YES;
-                 break;
+                 if([name isEqualToString:[album valueForKey:@"name"]])
+                 {
+                     NSLog(@"found match");
+                     [self postPhotosToFacebook:photosArray withAlbumID:[album valueForKeyPath:@"id"] privacy:paramPrivacy];
+                     found = YES;
+                     break;
+                 }
              }
-         }
-         if(found == NO)
-         {
-             [self createAlbum:name andUploadPhotos:photosArray privacy:paramPrivacy];
-         }
+             if(found == NO)
+             {
+                 [self createAlbum:name andUploadPhotos:photosArray privacy:paramPrivacy];
+             }
          }
          else
          {
              NSLog(@"error getting albums data%@",error.localizedDescription);
              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
+             
          }
      }];
 }
@@ -95,7 +95,7 @@
     NSString *privacy = [NSString stringWithFormat:@"{'value' :'%@'}",privacyVal];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 image,@"picture",
-                                description,@"description",
+                                description,@"message",
                                 privacy,@"privacy",
                                 nil];
     
@@ -108,22 +108,20 @@
     [connection addRequest:request
          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
              
-             if (!error) {
-                 
-                 NSLog(@"Photo uploaded successfuly! %@",result);
-                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Photo Uploaded successfuly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             if (!error)
+             {
+                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Photo uploaded successfuly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                  [alertView show];
                  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-                 
-             } else {
-                 
-                 NSLog(@"Photo uploaded failed :( %@",error.userInfo);
-                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
              }
-             
-         }];
+             else
+             {
+                 NSLog(@"Photo uploaded failed :( %@",error.userInfo);
+                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't upload photo" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                 [alertView show];
+                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+             }
+          }];
     
     [connection start];
     
@@ -168,7 +166,6 @@
                     
                     if(error == nil)
                     {
-                        NSLog(@"login successful");
                         // Respond to session state changes,
                         // ex: updating the view
                     }

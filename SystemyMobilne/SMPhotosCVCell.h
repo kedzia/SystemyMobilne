@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SMPhoto.h"
 
 @interface SMPhotosCVCell : UICollectionViewCell
 
--(void)viewWithALAssetURL:(NSURL*) paramURL;
+-(void)viewWithALAssetPhoto:(SMPhoto*)photo;
 
 @end
