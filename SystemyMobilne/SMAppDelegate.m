@@ -83,10 +83,6 @@
         {
             NSLog(@"%@",savingError.localizedDescription);
         }
-        else
-        {
-            NSLog(@"saving Core Date success");
-        }
     }];
    
 }
