@@ -211,7 +211,8 @@
 				190862DE194073FF0035D017 /* ELCImagePickerController.m */,
 				190862DF194073FF0035D017 /* Resources */,
 			);
-			path = ELCImagePicker;
+			name = ELCImagePicker;
+			path = Classes/ELCImagePicker;
 			sourceTree = "<group>";
 		};
 		190862DF194073FF0035D017 /* Resources */ = {
@@ -244,6 +245,7 @@
 				19421B011948F19F004B5A57 /* SMLocalizer.m */,
 			);
 			name = Map;
+			path = Classes/Map;
 			sourceTree = "<group>";
 		};
 		192FAA7F1918108500800756 /* Photos */ = {
@@ -268,7 +270,7 @@
 				19EC31EE1948A2C600C73A58 /* Facebook */,
 			);
 			name = Photos;
-			path = /Users/z/Developer/SystemyMobilne/SystemyMobilne/Photos;
+			path = /Users/z/Developer/SystemyMobilne/SystemyMobilne/Classes/Photos;
 			sourceTree = "<absolute>";
 		};
 		19A6B24B18F8216A00C9D11A /* CoreData */ = {
@@ -292,7 +294,8 @@
 				19A6B25818F8279E00C9D11A /* SMLocation+methods.h */,
 				19A6B25918F8279E00C9D11A /* SMLocation+methods.m */,
 			);
-			path = CoreData;
+			name = CoreData;
+			path = Classes/CoreData;
 			sourceTree = "<group>";
 		};
 		19BC857118F6B5CA00D9AA91 = {
