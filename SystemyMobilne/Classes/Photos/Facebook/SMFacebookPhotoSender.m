@@ -172,6 +172,7 @@
                     else
                     {
                         NSLog(@"login unsuccessful");
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                     }
                     
                 }];
@@ -215,6 +216,7 @@
                                else
                                {
                                    NSLog(@"ERROR PERMISSION :%@",error.localizedDescription);
+                                   [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
                                }
                            }];
                       }

@@ -356,6 +356,12 @@
 
 -(void)checkIfAnnotationIsValid:(SMAnnotation*) annotation
 {
+    NSError *error = nil;
+    [self.managedObjectContext save:&error];
+    if(error)
+    {
+        NSLog(@"%@", error.description);
+    }
     int emptyLocationCounter = 0;
     for(SMLocation *location in annotation.locationsArray)
     {
