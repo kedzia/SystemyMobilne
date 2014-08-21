@@ -73,7 +73,11 @@
             self.locationsArray = [[NSMutableArray alloc] initWithCapacity:locationArray.count];
         }
         [self.locationsArray addObjectsFromArray:locationArray];
-        [self updateMap];
+        __weak typeof(self) weakSelf = self;
+        dispatch_queue_t mainQueue = dispatch_get_main_queue();
+        dispatch_async(mainQueue, ^{
+            [weakSelf updateMap];
+        });
     }
    
 }
@@ -292,7 +296,12 @@
 {
     if(self.previousZoomScale != [self zoomLevelForMap])
     {
-        [self updateMap];
+        __weak typeof(self) weakSelf = self;
+        dispatch_queue_t mainQueue = dispatch_get_main_queue();
+        dispatch_async(mainQueue, ^{
+            [weakSelf updateMap];
+        });
+        
     }
     self.previousZoomScale = [self zoomLevelForMap];
 }

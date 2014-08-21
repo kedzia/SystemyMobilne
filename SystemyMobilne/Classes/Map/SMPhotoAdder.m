@@ -178,9 +178,8 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info valueForKeyPath:UIImagePickerControllerOriginalImage];
     ALAssetsLibrary* library = [SMAppDelegate sharedLibrary];
-    [library writeImageToSavedPhotosAlbum:image.CGImage orientation:ALAssetOrientationRight completionBlock:^(NSURL *assetURL, NSError *error) {
+    [library writeImageToSavedPhotosAlbum:[[info valueForKeyPath:UIImagePickerControllerOriginalImage] CGImage] orientation:ALAssetOrientationRight completionBlock:^(NSURL *assetURL, NSError *error) {
         if(!error)
         {
             [self savePhotoWithURLs:@[assetURL] Location:self.location inContext:self.moc];
