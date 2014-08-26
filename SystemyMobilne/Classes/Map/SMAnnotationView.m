@@ -7,7 +7,7 @@
 //
 
 #import "SMAnnotationView.h"
-#import "SMAnnotation.h"
+
 
 @implementation SMAnnotationView
 
@@ -26,13 +26,9 @@
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     if(self)
     {
-        self.pinColor = MKPinAnnotationColorPurple;
         self.animatesDrop = YES;
         self.canShowCallout = YES;
-        if([(SMAnnotation*)annotation locationsArray].count >1)
-        {
-            self.pinColor = MKPinAnnotationColorGreen;
-        }
+        [self setPinColorForAnnotation:annotation];
     }
     return self;
 }
@@ -44,6 +40,17 @@
     return anno.locationsArray.count >1 ? NO : YES;
 }
 
+- (void)setPinColorForAnnotation:(SMAnnotation *)annotation
+{
+    if([(SMAnnotation*)annotation locationsArray].count >1)
+    {
+        self.pinColor = MKPinAnnotationColorGreen;
+    }
+    else
+    {
+        self.pinColor = MKPinAnnotationColorPurple;
+    }
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

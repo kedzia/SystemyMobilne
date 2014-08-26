@@ -123,6 +123,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.myLocalizer = [[SMLocalizer alloc] init];
     self.longGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     self.longGestureRecognizer.delegate = self;
@@ -150,8 +151,7 @@
 {
     ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *myAsset)
     {
-        ALAssetRepresentation *rep = [myAsset defaultRepresentation];
-        CGImageRef imgRef = [rep fullScreenImage];
+        CGImageRef imgRef = [myAsset thumbnail];
         if(imgRef)
         {
             UIImage *largeImage = [UIImage imageWithCGImage:imgRef];
@@ -160,6 +160,7 @@
             imv.autoresizingMask = UIViewContentModeScaleToFill;
             imv.frame = CGRectMake(0, 0, 35, 35);
             paramView.frame = imv.frame;
+            [[paramView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
             [paramView addSubview:imv];
         }
     };
@@ -307,19 +308,24 @@
 }
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    SMAnnotationView *annotationView = nil;
+    MKAnnotationView *annotationView = nil;
     if([annotation isKindOfClass:[SMAnnotation class]])
     {
+        annotationView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:ANNO_VIEW_ID];
         SMAnnotation *smAnnotation = (SMAnnotation*) annotation;
-        annotationView = [[SMAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNO_VIEW_ID];
-   
-        UIButton *accesorButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        [accesorButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-        
-        annotationView.rightCalloutAccessoryView = accesorButton;
-        annotationView.leftCalloutAccessoryView = [[UIView alloc] init];
-        
+        if (annotationView == nil)
+        {
+            annotationView = [[SMAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNO_VIEW_ID];
+       
+            UIButton *accesorButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            [accesorButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+            
+            annotationView.rightCalloutAccessoryView = accesorButton;
+            annotationView.leftCalloutAccessoryView = [[UIView alloc] init];
+        }
         [self retrieveImageFromAssestsWithURL:smAnnotation.photoURL forView:annotationView.leftCalloutAccessoryView];
+        [annotationView performSelector:@selector(setPinColorForAnnotation:)withObject:annotation];
+        
     }
     else
     {
@@ -354,8 +360,6 @@
         self.lastModifiedAnnotation = anno;
         
         [[self navigationController] pushViewController:photoCVC animated:YES];
-        
-        
     }
     else
     {

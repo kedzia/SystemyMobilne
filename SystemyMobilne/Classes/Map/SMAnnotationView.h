@@ -7,7 +7,9 @@
 //
 
 #import <MapKit/MapKit.h>
+#import "SMAnnotation.h"
 
 @interface SMAnnotationView : MKPinAnnotationView
 
+- (void)setPinColorForAnnotation:(SMAnnotation *)annotation;
 @end
